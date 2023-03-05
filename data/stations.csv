@@ -1,4 +1,4 @@
-NAME,DISTRICT,MUNICIPALITY,TOWNSHIP,LINE
+Name,District,Municipality,Township,Line
 Porto Campanhã,PORTO,PORTO,Porto,Linha do Norte
 Viana do Castelo,VIANA DO CASTELO,VIANA DO CASTELO,Viana do Castelo,Linha do Minho
 Ermidas-Sado,SETÚBAL,SANTIAGO DO CACÉM,Ermidas-Sado,Linha do Sul
@@ -506,7 +506,7 @@ Vila Franca das Naves,GUARDA,TRANCOSO,Vila Franca das Naves e Feital,Linha da Be
 Camarão,LEIRIA,BOMBARRAL,Bombarral e Vale Covo,Linha do Oeste
 Raquete,SETÚBAL,SINES,Sines,Linha de Sines
 Tomar,SANTARÉM,TOMAR,São João Baptista e Santa Maria dos Olivais,Ramal de Tomar
-"Desvio Km 19,5",SANTARÉM,SALVATERRA DE MAGOS,Glória do Ribatejo e Granho,Linha de Vendas Novas
+"Desvio Km 19.5",SANTARÉM,SALVATERRA DE MAGOS,Glória do Ribatejo e Granho,Linha de Vendas Novas
 Grândola,SETÚBAL,GRÂNDOLA,Grândola e Santa Margarida da Serra,Linha do Sul
 Alvega-Ortiga,SANTARÉM,MAÇÃO,Ortiga,Linha da Beira Baixa
 Sapataria,LISBOA,SOBRAL DE MONTE AGRAÇO,Sapataria,Linha do Oeste

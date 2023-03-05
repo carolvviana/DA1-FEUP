@@ -492,9 +492,9 @@ Leiria,Óbidos,4,STANDARD
 Pombal,Chão de Maçãs-Fátima,4,STANDARD
 Chão de Maçãs-Fátima,Entroncamento,2,STANDARD
 Entroncamento,Lisboa Oriente,8,STANDARD
-Albufeira,Faro,8,STANDARD
+Albufeira - Ferreiras,Faro,8,STANDARD
 Braga,Famalicão,4,ALFA PENDULAR
-Famalicão,Trofa,2,ALFA PENDULAR
+Famalicão,Trofa,4,ALFA PENDULAR
 Trofa,Porto Campanhã,10,ALFA PENDULAR
 Porto Campanhã,Vila Nova de Gaia-Devesas,8,ALFA PENDULAR
 Vila Nova de Gaia-Devesas,Espinho,6,ALFA PENDULAR
@@ -504,10 +504,10 @@ Coimbra B,Pombal,6,ALFA PENDULAR
 Pombal,Entroncamento,4,ALFA PENDULAR
 Entroncamento,Santarém,8,ALFA PENDULAR
 Santarém,Lisboa Oriente,10,ALFA PENDULAR
-Lisboa Oriente,Lisboa Santa Apolónia,4,ALFA PENDULAR
+Lisboa Oriente,Lisboa Santa Apolónia,8,ALFA PENDULAR
 Entrecampos,Pinhal Novo,10,ALFA PENDULAR
 Pinhal Novo,Grândola,4,ALFA PENDULAR
-Grândola,Ermidas-Sado,2,ALFA PENDULAR
+Grândola,Ermidas-Sado,4,ALFA PENDULAR
 Ermidas-Sado,Funcheira,4,ALFA PENDULAR
 Funcheira,Santa Clara-Sabóia,4,ALFA PENDULAR
 Santa Clara-Sabóia,Tunes,4,ALFA PENDULAR
