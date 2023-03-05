@@ -6,5 +6,5 @@ add_executable(
         Projeto_DA_1
         main.cpp
 
-)
+        src/Menu.cpp src/Menu.h)
 
