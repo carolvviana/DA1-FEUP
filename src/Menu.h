@@ -7,12 +7,14 @@
 
 #include <stack>
 #include <iostream>
+#include "Railway.h"
 
 /*
  * Menu's states
  */
 enum MenuState{
-    MAIN_MENU // Para adicionar mais menus, basta adicionar aqui
+    INIT_MENU, // Initial menu
+    MAIN_MENU // To add more menus, just add here
 };
 
 /*
@@ -20,7 +22,10 @@ enum MenuState{
  */
 class Menu {
 private:
-
+    /**
+     * @var railway - railway object
+     */
+    Railway railway;
     /**
      * @var menuState - stack of menu's states
      */
@@ -35,6 +40,11 @@ private:
      * @var option - option selected by user
      */
     int option;
+
+    /**
+     * Initial menu of application
+     */
+    void InitMenu();
 
     /**
      * Main menu of application

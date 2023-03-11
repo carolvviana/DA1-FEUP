@@ -8,7 +8,7 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
-#include "../data_structures/MutablePriorityQueue.h"
+//#include "../data_structures/MutablePriorityQueue.h"
 
 #include "VertexEdge.h"
 
@@ -18,23 +18,25 @@ public:
     /*
     * Auxiliary function to find a vertex with a given ID.
     */
-    Vertex *findVertex(const int &id) const;
+    Vertex *findVertex(const string &name) const;
     /*
      *  Adds a vertex with a given content or info (in) to a graph (this).
      *  Returns true if successful, and false if a vertex with that content already exists.
      */
-    bool addVertex(const int &id);
+    bool addVertex(const string &name,const string& district, const string& municipality, const string& township, const string& station_line);
 
     /*
      * Adds an edge to a graph (this), given the contents of the source and
      * destination vertices and the edge weight (w).
      * Returns true if successful, and false if the source or destination vertex does not exist.
      */
-    bool addEdge(const int &sourc, const int &dest, double w);
-    bool addBidirectionalEdge(const int &sourc, const int &dest, double w);
+    bool addEdge(const string &source, const string &dest, double w, const string& service);
+    bool addBidirectionalEdge(const string &source, const string &dest, double w, const string& service);
 
     int getNumVertex() const;
     std::vector<Vertex *> getVertexSet() const;
+
+    void cleanGraph();
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set
 
@@ -44,7 +46,7 @@ protected:
     /*
      * Finds the index of the vertex with a given content.
      */
-    int findVertexIdx(const int &id) const;
+    int findVertexIdx(const string &id) const;
 };
 
 void deleteMatrix(int **m, int n);

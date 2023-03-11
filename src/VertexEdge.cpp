@@ -4,14 +4,15 @@
 
 /************************* Vertex  **************************/
 
-Vertex::Vertex(int id): id(id) {}
+Vertex::Vertex(string name, string district, string municipality, string township, string station_line):
+    name(name), district(district), municipality(municipality), township(township), station_line(station_line) {}
 
 /*
  * Auxiliary function to add an outgoing edge to a vertex (this),
  * with a given destination vertex (d) and edge weight (w).
  */
-Edge * Vertex::addEdge(Vertex *d, double w) {
-    auto newEdge = new Edge(this, d, w);
+Edge * Vertex::addEdge(Vertex *d, double w, string service){
+    auto newEdge = new Edge(this, d, w, service);
     adj.push_back(newEdge);
     d->incoming.push_back(newEdge);
     return newEdge;
@@ -22,18 +23,18 @@ Edge * Vertex::addEdge(Vertex *d, double w) {
  * from a vertex (this).
  * Returns true if successful, and false if such edge does not exist.
  */
-bool Vertex::removeEdge(int destID) {
+bool Vertex::removeEdge(const string& destName) {
     bool removedEdge = false;
     auto it = adj.begin();
     while (it != adj.end()) {
         Edge *edge = *it;
         Vertex *dest = edge->getDest();
-        if (dest->getId() == destID) {
+        if (dest->getName() == destName) {
             it = adj.erase(it);
             // Also remove the corresponding edge from the incoming list
             auto it2 = dest->incoming.begin();
             while (it2 != dest->incoming.end()) {
-                if ((*it2)->getOrig()->getId() == id) {
+                if ((*it2)->getOrig()->getName() == name) {
                     it2 = dest->incoming.erase(it2);
                 }
                 else {
@@ -54,8 +55,8 @@ bool Vertex::operator<(Vertex & vertex) const {
     return this->dist < vertex.dist;
 }
 
-int Vertex::getId() const {
-    return this->id;
+string Vertex::getName() const {
+    return this->name;
 }
 
 std::vector<Edge*> Vertex::getAdj() const {
@@ -86,9 +87,6 @@ std::vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
 
-void Vertex::setId(int id) {
-    this->id = id;
-}
 
 void Vertex::setVisited(bool visited) {
     this->visited = visited;
@@ -112,7 +110,7 @@ void Vertex::setPath(Edge *path) {
 
 /********************** Edge  ****************************/
 
-Edge::Edge(Vertex *orig, Vertex *dest, double w): orig(orig), dest(dest), weight(w) {}
+Edge::Edge(Vertex *orig, Vertex *dest, double w, string service): orig(orig), dest(dest), weight(w), service(service) {}
 
 Vertex * Edge::getDest() const {
     return this->dest;

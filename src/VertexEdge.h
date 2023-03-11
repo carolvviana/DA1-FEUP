@@ -8,9 +8,12 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
-#include "../data_structures/MutablePriorityQueue.h"
+//#include "../data_structures/MutablePriorityQueue.h"
+#include <string>
 
 class Edge;
+
+using namespace std;
 
 #define INF std::numeric_limits<double>::max()
 
@@ -18,10 +21,10 @@ class Edge;
 
 class Vertex {
 public:
-    Vertex(int id);
+    Vertex(string name, string district, string municipality, string township, string station_line);
     bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 
-    int getId() const;
+    string getName() const;
     std::vector<Edge *> getAdj() const;
     bool isVisited() const;
     bool isProcessing() const;
@@ -30,18 +33,23 @@ public:
     Edge *getPath() const;
     std::vector<Edge *> getIncoming() const;
 
-    void setId(int info);
     void setVisited(bool visited);
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPath(Edge *path);
-    Edge * addEdge(Vertex *dest, double w);
-    bool removeEdge(int destID);
+    Edge * addEdge(Vertex *dest, double w, string service);
+    bool removeEdge(const string& destName);
 
-    friend class MutablePriorityQueue<Vertex>;
+    //friend class MutablePriorityQueue<Vertex>;
 protected:
-    int id;                // identifier
+
+    string name;
+    string district;
+    string municipality;
+    string township;
+    string station_line;
+
     std::vector<Edge *> adj;  // outgoing edges
 
     // auxiliary fields
@@ -53,14 +61,14 @@ protected:
 
     std::vector<Edge *> incoming; // incoming edges
 
-    int queueIndex = 0; 		// required by MutablePriorityQueue and UFDS
+    //int queueIndex = 0; 		// required by MutablePriorityQueue and UFDS
 };
 
 /********************** Edge  ****************************/
 
 class Edge {
 public:
-    Edge(Vertex *orig, Vertex *dest, double w);
+    Edge(Vertex *orig, Vertex *dest, double w, string service);
 
     Vertex * getDest() const;
     double getWeight() const;
@@ -74,6 +82,9 @@ public:
     void setFlow(double flow);
 protected:
     Vertex * dest; // destination vertex
+
+    string service; // type of service
+
     double weight; // edge weight, can also be used for capacity
 
     // auxiliary fields

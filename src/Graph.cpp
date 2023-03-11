@@ -13,9 +13,9 @@ std::vector<Vertex *> Graph::getVertexSet() const {
 /*
  * Auxiliary function to find a vertex with a given content.
  */
-Vertex * Graph::findVertex(const int &id) const {
+Vertex * Graph::findVertex(const string &name) const {
     for (auto v : vertexSet)
-        if (v->getId() == id)
+        if (v->getName() == name)
             return v;
     return nullptr;
 }
@@ -23,9 +23,9 @@ Vertex * Graph::findVertex(const int &id) const {
 /*
  * Finds the index of the vertex with a given content.
  */
-int Graph::findVertexIdx(const int &id) const {
+int Graph::findVertexIdx(const string &name) const {
     for (unsigned i = 0; i < vertexSet.size(); i++)
-        if (vertexSet[i]->getId() == id)
+        if (vertexSet[i]->getName() == name)
             return i;
     return -1;
 }
@@ -33,10 +33,10 @@ int Graph::findVertexIdx(const int &id) const {
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
-bool Graph::addVertex(const int &id) {
-    if (findVertex(id) != nullptr)
+bool Graph::addVertex(const string &name, const string& district, const string& municipality, const string& township, const string& station_line) {
+    if (findVertex(name) != nullptr)
         return false;
-    vertexSet.push_back(new Vertex(id));
+    vertexSet.push_back(new Vertex(name, district, municipality, township, station_line));
     return true;
 }
 
@@ -45,22 +45,22 @@ bool Graph::addVertex(const int &id) {
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
-bool Graph::addEdge(const int &sourc, const int &dest, double w) {
-    auto v1 = findVertex(sourc);
+bool Graph::addEdge(const string &source, const string &dest, double w, const string& service) {
+    auto v1 = findVertex(source);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
         return false;
-    v1->addEdge(v2, w);
+    v1->addEdge(v2, w, service);
     return true;
 }
 
-bool Graph::addBidirectionalEdge(const int &sourc, const int &dest, double w) {
-    auto v1 = findVertex(sourc);
+bool Graph::addBidirectionalEdge(const string &source, const string &dest, double w, const string& service) {
+    auto v1 = findVertex(source);
     auto v2 = findVertex(dest);
     if (v1 == nullptr || v2 == nullptr)
         return false;
-    auto e1 = v1->addEdge(v2, w);
-    auto e2 = v2->addEdge(v1, w);
+    auto e1 = v1->addEdge(v2, w, service);
+    auto e2 = v2->addEdge(v1, w, service);
     e1->setReverse(e2);
     e2->setReverse(e1);
     return true;
@@ -87,4 +87,16 @@ void deleteMatrix(double **m, int n) {
 Graph::~Graph() {
     deleteMatrix(distMatrix, vertexSet.size());
     deleteMatrix(pathMatrix, vertexSet.size());
+}
+
+void Graph::cleanGraph() {
+    /* remove all vertices and edges */
+    for (auto v : vertexSet){
+
+        for(auto e : v->getAdj()){
+            delete e;
+        }
+        delete v;
+    }
+    vertexSet.clear();
 }
