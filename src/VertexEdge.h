@@ -72,6 +72,7 @@ public:
 
     Vertex * getDest() const;
     double getWeight() const;
+    string getService() const;
     bool isSelected() const;
     Vertex * getOrig() const;
     Edge *getReverse() const;

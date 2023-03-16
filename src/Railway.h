@@ -32,9 +32,7 @@ public:
     void createLines(const string& filepath = "../data/network.csv");
 
     void cleanGraph();
-
-
-
+    double RmaxFlow(string& source, string& dest);
 };
 
 

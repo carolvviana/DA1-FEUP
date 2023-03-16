@@ -37,6 +37,17 @@ public:
     std::vector<Vertex *> getVertexSet() const;
 
     void cleanGraph();
+
+
+    /**
+     * @brief Determine the maximum flow of a determined Graph
+     * @return
+     */
+    void maxFlow(string& source, string& dest);
+    bool path(string& source, string& dest);
+    double findBottleneck(string& dest);
+    void augmentedPath(string& dest, double bottleneck);
+
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set
 

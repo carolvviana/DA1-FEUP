@@ -4,5 +4,7 @@
 
 int main(){
     Menu menu = Menu();
+
+    cout << "helo";
     return 0;
 }

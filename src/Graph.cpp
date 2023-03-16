@@ -100,3 +100,75 @@ void Graph::cleanGraph() {
     }
     vertexSet.clear();
 }
+void Graph :: maxFlow(string& source, string& dest){
+    for (Vertex* v: vertexSet){
+        for (Edge* e: v->getIncoming()){
+            e->setFlow(0);
+
+            Edge* reverse = new Edge(e->getDest(), e->getOrig(), e->getWeight(), e->getService());
+            reverse->setFlow(0);
+            reverse->setReverse(e);
+            e->setReverse(reverse);
+        }
+    }
+
+    double bottleneck;
+    while(path(source,dest)){
+        bottleneck = findBottleneck(dest);
+        augmentedPath(dest, bottleneck);
+    }
+}
+bool Graph::path(string& source, string& dest){
+    for (Vertex* v: vertexSet){
+        v->setVisited(false);
+        v->setPath(nullptr);
+    }
+    std :: queue<string> s({source});
+    findVertex(source)->setVisited(true);
+    while(!s.empty()){
+        Vertex* v = findVertex(s.front());
+        for(Edge* e: v->getAdj()){
+            if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0){
+                s.push(e->getDest()->getName());
+                e->getDest()->setVisited(true);
+                e->getDest()->setPath(e);
+                if ( e->getDest()->getName() == dest){
+                    return true;
+                }
+            }
+        }
+
+        for (Edge* e: v->getIncoming()){
+            if(e->getReverse()->getOrig() == v && !e->getReverse()->getDest()->isVisited() && e->getReverse()->getFlow() != 0){
+                s.push(e->getReverse()->getDest()->getName());
+                e->getDest()->setVisited(true);
+                e->getDest()->setPath(e);
+                if ( e->getDest()->getName() == dest){
+                    return true;
+                }
+            }
+        }
+        s.pop();
+    }
+    return false;
+}
+double Graph:: findBottleneck(string& dest){
+    Vertex* v = findVertex(dest);
+    double bottleneck = std::numeric_limits<double>::max();
+    while(v->getPath() != nullptr){
+        double remaining = v->getPath()->getWeight() - v->getPath()->getFlow();
+        if (remaining < bottleneck){
+            bottleneck = remaining;
+        }
+        v = v->getPath()->getOrig();
+    }
+    return bottleneck;
+}
+void Graph:: augmentedPath(string& dest, double bottleneck){
+    Vertex* v = findVertex(dest);
+    while(v->getPath() != nullptr){
+        v->getPath()->setFlow(v->getPath()->getFlow() + bottleneck);
+        v->getPath()->getReverse()->setFlow(v->getPath()->getReverse()->getFlow() - bottleneck);
+        v = v->getPath()->getOrig();
+    }
+}

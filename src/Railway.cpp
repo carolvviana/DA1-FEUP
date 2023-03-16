@@ -108,3 +108,15 @@ Railway::Railway() = default;
 void Railway::cleanGraph() {
     graph.cleanGraph();
 }
+double Railway:: RmaxFlow(string& source, string& dest){
+    double result;
+    graph.maxFlow(source, dest);
+    Vertex* v = graph.findVertex(dest);
+    for (Edge* e :v->getIncoming()){
+        result+=e->getFlow();
+    }
+    return result;
+
+}
+
+

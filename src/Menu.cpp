@@ -97,7 +97,9 @@ void Menu::mainMenu() {
 
     switch(this->option){
         case 1: {
-
+            string a = "Alferrarede";
+            string b = "Fratel";
+            cout << railway.RmaxFlow(a,b);
             break;
         }
         case 2: {
