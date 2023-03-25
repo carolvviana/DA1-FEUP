@@ -116,7 +116,7 @@ double Railway:: RmaxFlow(string& source, string& dest){
         result+=e->getFlow();
     }
     return result;
-
 }
+
 
 
