@@ -24,7 +24,7 @@ public:
     Vertex(string name, string district, string municipality, string township, string station_line);
     bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 
-    string getName() const;
+    std::string getName() const;
     std::vector<Edge *> getAdj() const;
     bool isVisited() const;
     bool isProcessing() const;

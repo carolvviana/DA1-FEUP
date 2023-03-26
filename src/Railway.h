@@ -10,6 +10,8 @@
 
 using namespace std;
 
+
+
 class Railway {
 private:
 
@@ -33,6 +35,7 @@ public:
 
     void cleanGraph();
     double RmaxFlow(string& source, string& dest);
+    std:: vector<string> mostAmountOfTrains();
 };
 
 

@@ -47,6 +47,7 @@ public:
     bool path(string& source, string& dest);
     double findBottleneck(string& dest);
     void augmentedPath(string& dest, double bottleneck);
+    std::vector<Vertex*> initialStops();
 
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set

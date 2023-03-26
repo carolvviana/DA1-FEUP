@@ -108,6 +108,7 @@ Railway::Railway() = default;
 void Railway::cleanGraph() {
     graph.cleanGraph();
 }
+
 double Railway:: RmaxFlow(string& source, string& dest){
     double result;
     graph.maxFlow(source, dest);
@@ -116,6 +117,40 @@ double Railway:: RmaxFlow(string& source, string& dest){
         result+=e->getFlow();
     }
     return result;
+}
+
+std::vector<string> Railway::mostAmountOfTrains(){
+    std::vector<string> res;
+    std::vector<Vertex*> initialStops = graph.initialStops();
+    string source = initialStops[0]->getName();
+    string dest = graph.getVertexSet()[0]->getName();
+    double maxFlow = RmaxFlow(source, dest);
+
+    for (Vertex* v: graph.getVertexSet()){
+        for (Vertex* vertex: initialStops){
+            string s = vertex->getName();
+            string t = v->getName();
+            double localMax = RmaxFlow(s, t);
+
+            if (localMax >= maxFlow){
+                maxFlow = localMax;
+            }
+        }
+    }
+
+    for (Vertex* v: graph.getVertexSet()){
+        for (Vertex* vertex: initialStops){
+            string s = vertex->getName();
+            string t = v->getName();
+            double localMax = RmaxFlow(s, t);
+
+            if (localMax == maxFlow){
+                res.push_back(s);
+                res.push_back(t);
+            }
+        }
+    }
+    return res;
 }
 
 

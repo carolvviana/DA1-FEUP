@@ -99,7 +99,10 @@ void Menu::mainMenu() {
         case 1: {
             string a = "Alferrarede";
             string b = "Fratel";
-            cout << railway.RmaxFlow(a,b);
+            std::vector<string> r = railway.mostAmountOfTrains();
+            for (auto s: r){
+                cout << "  " << s << "  |" <<'\n';
+            }
             break;
         }
         case 2: {
