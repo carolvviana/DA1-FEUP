@@ -172,7 +172,7 @@ void Graph:: augmentedPath(string& dest, double bottleneck){
         v = v->getPath()->getOrig();
     }
 }
-std::vector<Vertex*> Graph:: initialStops(){
+std::vector<Vertex*> Graph:: getInitialStops(){
     std::vector<Vertex*> res;
     for (Vertex* v: vertexSet){
         if (v->getIncoming().empty()) res.push_back(v);

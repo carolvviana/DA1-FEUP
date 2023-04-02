@@ -120,37 +120,18 @@ double Railway:: RmaxFlow(string& source, string& dest){
 }
 
 std::vector<string> Railway::mostAmountOfTrains(){
-    std::vector<string> res;
-    std::vector<Vertex*> initialStops = graph.initialStops();
-    string source = initialStops[0]->getName();
-    string dest = graph.getVertexSet()[0]->getName();
-    double maxFlow = RmaxFlow(source, dest);
+    //add a super source
+    Vertex SuperSource = Vertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");
 
-    for (Vertex* v: graph.getVertexSet()){
-        for (Vertex* vertex: initialStops){
-            string s = vertex->getName();
-            string t = v->getName();
-            double localMax = RmaxFlow(s, t);
-
-            if (localMax >= maxFlow){
-                maxFlow = localMax;
-            }
-        }
+    //add edges from super source to all initial stops
+    vector<Vertex*> initialStops = graph.getInitialStops();
+    for(Vertex* v : initialStops){
+        graph.addEdge("SuperSource", v->getName(), INF , "SuperSource");
     }
 
-    for (Vertex* v: graph.getVertexSet()){
-        for (Vertex* vertex: initialStops){
-            string s = vertex->getName();
-            string t = v->getName();
-            double localMax = RmaxFlow(s, t);
+    //go through all combinations of stops
 
-            if (localMax == maxFlow){
-                res.push_back(s);
-                res.push_back(t);
-            }
-        }
-    }
-    return res;
+
 }
 
 
