@@ -150,8 +150,7 @@ std::vector<string> Railway::mostAmountOfTrains(){
             }
         }
     }
+
     return res;
+
 }
-
-
-
