@@ -216,6 +216,23 @@ void Menu::basicServiceMetrics(){
 
         }
         case 4:{
+            string station1;
+
+            do {
+                cout << "Destination Station: ";
+                getline(cin, station1);
+
+                if (!railway.stationExists(station1)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while(!railway.stationExists(station1));
+
+            cout << railway.maxNumberOfTrainsArriving(station1) << endl;
+
+            cout << "Press enter to continue..." << endl;
+            std::cin.get(); // wait for user input
+            break;
 
         }
         case 5:{

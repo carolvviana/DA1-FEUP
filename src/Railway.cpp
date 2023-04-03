@@ -355,3 +355,17 @@ std::vector<string> Railway::topKMunicipalities(int k){
     }
     return rtrn;
 }
+double Railway:: maxNumberOfTrainsArriving(string dest){
+    //Vertex SuperSource = Vertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");
+    graph.addVertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");
+    //add edges from super source to all initial stops
+    vector<Vertex*> initialStops = graph.getInitialStops();
+    for(Vertex* v : initialStops){
+        graph.addEdge("SuperSource", v->getName(), INF , "SuperSource");
+    }
+
+    string source = graph.findVertex("SuperSource")->getName();
+
+    double flow = RmaxFlow(source, dest, std::numeric_limits<double>::max());
+    return flow;
+}

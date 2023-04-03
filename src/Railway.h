@@ -69,6 +69,7 @@ public:
     std::vector<string> topKMunicipalities(int k);
 
     double RmaxFlow_municipalities(string& source, string& dest);
+    double maxNumberOfTrainsArriving(string dest);
 
 
 };
