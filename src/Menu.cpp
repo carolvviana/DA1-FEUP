@@ -46,6 +46,9 @@ void Menu::InitMenu() {
 
             railway.createStations();
             railway.createLines();
+            railway.createStationsMunicipalities();
+            railway.createLinesMunicipalities();
+
 
             menuState.push(MAIN_MENU);
             break;
@@ -63,6 +66,8 @@ void Menu::InitMenu() {
 
             railway.createStations(stations_path);
             railway.createLines(lines_path);
+            railway.createStationsMunicipalities(stations_path);
+            railway.createLinesMunicipalities(lines_path);
 
             menuState.push(MAIN_MENU);
             break;
@@ -99,7 +104,7 @@ void Menu::mainMenu() {
         case 1: {
             string a = "Alferrarede";
             string b = "Fratel";
-            std::vector<string> r = railway.mostAmountOfTrains();
+            std::vector<string> r = railway.topKMunicipalities(5);
             for (auto s: r){
                 cout << "  " << s << "  |" <<'\n';
             }

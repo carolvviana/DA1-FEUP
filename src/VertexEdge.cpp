@@ -150,3 +150,6 @@ void Edge::setFlow(double flow) {
 string Edge::getService() const{
     return this->service;
 }
+string Vertex::getMunicipality() const{
+    return this->municipality;
+}
