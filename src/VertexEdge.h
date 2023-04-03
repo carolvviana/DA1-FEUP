@@ -41,6 +41,8 @@ public:
     Edge * addEdge(Vertex *dest, double w, string service);
     bool removeEdge(const string& destName);
 
+    string getMunicipality() const;
+
     //friend class MutablePriorityQueue<Vertex>;
 protected:
 

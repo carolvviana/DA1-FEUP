@@ -52,6 +52,9 @@ void Menu::InitMenu() {
 
             railway.createStations();
             railway.createLines();
+            railway.createStationsMunicipalities();
+            railway.createLinesMunicipalities();
+
 
             menuState.push(MAIN_MENU);
             break;
@@ -69,6 +72,8 @@ void Menu::InitMenu() {
 
             railway.createStations(stations_path);
             railway.createLines(lines_path);
+            railway.createStationsMunicipalities(stations_path);
+            railway.createLinesMunicipalities(lines_path);
 
             menuState.push(MAIN_MENU);
             break;
