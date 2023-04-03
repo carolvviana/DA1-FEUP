@@ -252,7 +252,6 @@ std::vector<pair<double, string>> Railway::mostAmountOfTrains(){
     for(Vertex* a : vertexSet){
         if(a->getName() == "SuperSource") continue;
 
-<<<<<<< HEAD
         //node A incomming flow
         double Aflow;
         if(incomingFlows.find(a->getName()) != incomingFlows.end()){
@@ -289,8 +288,7 @@ std::vector<pair<double, string>> Railway::mostAmountOfTrains(){
 
 bool Railway::stationExists(const string& stationName) {
     return graph.findVertex(stationName) != nullptr;
-=======
->>>>>>> c7829034c66dafe9570f69f27220725b8698d59b
+
 }
 
 std::vector<string> Railway::topKMunicipalities(int k){

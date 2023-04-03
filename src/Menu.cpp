@@ -193,8 +193,26 @@ void Menu::basicServiceMetrics(){
             break;
         }
         case 3:{
+            do{
+                cout << "1 -" << endl;
+            } while(this->option < 1 || this->option > 3);
 
             break;
+
+            switch(this->option){
+                case 1:{
+
+                    break;
+                }
+                case 2:{
+
+                    break;
+                }
+                case 3:{
+
+                    break;
+                }
+            }
 
         }
         case 4:{
