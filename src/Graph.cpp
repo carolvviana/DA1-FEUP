@@ -100,82 +100,127 @@ void Graph::cleanGraph() {
     }
     vertexSet.clear();
 }
-void Graph :: maxFlow(string& source, string& dest){
-    for (Vertex* v: vertexSet){
-        for (Edge* e: v->getIncoming()){
-            e->setFlow(0);
 
-            Edge* reverse = new Edge(e->getDest(), e->getOrig(), e->getWeight(), e->getService());
-            reverse->setFlow(0);
-            reverse->setReverse(e);
-            e->setReverse(reverse);
+void Graph :: maxFlow(const string& source, const string& dest, double maxSourceFlow){
+    Vertex* s = findVertex(source);
+    Vertex* t = findVertex(dest);
+    if(s == nullptr || t == nullptr){
+        cout << "Source or destination not found" << endl;
+        return;
+    }
+
+    for (Vertex* v: vertexSet){
+        for (Edge* e: v->getAdj()){
+            e->setFlow(0);
         }
     }
 
     double bottleneck;
-    while(path(source,dest)){
-        bottleneck = findBottleneck(dest);
-        augmentedPath(dest, bottleneck);
+    while(path(s, t, maxSourceFlow)){
+        bottleneck = findBottleneck(s, t, maxSourceFlow);
+        augmentedPath(s,t, bottleneck);
     }
 }
-bool Graph::path(string& source, string& dest){
+
+bool Graph::path(Vertex* s, Vertex* t, double maxSourceFlow){
     for (Vertex* v: vertexSet){
         v->setVisited(false);
         v->setPath(nullptr);
     }
-    std :: queue<string> s({source});
-    findVertex(source)->setVisited(true);
-    while(!s.empty()){
-        Vertex* v = findVertex(s.front());
-        for(Edge* e: v->getAdj()){
-            if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0){
-                s.push(e->getDest()->getName());
-                e->getDest()->setVisited(true);
-                e->getDest()->setPath(e);
-                if ( e->getDest()->getName() == dest){
-                    return true;
-                }
+
+    s->setVisited(true);
+    std :: queue<Vertex*> q;
+    q.push(s);
+
+    while(!q.empty() && !t->isVisited()){
+        Vertex* v = q.front(); q.pop();
+
+
+        if (v == s) {
+            double totalFlow = 0;
+            for (Edge *e: v->getAdj()) {
+                totalFlow += e->getFlow();
+            }
+            if (totalFlow >= maxSourceFlow) {
+                return false;
             }
         }
 
-        for (Edge* e: v->getIncoming()){
-            if(e->getReverse()->getOrig() == v && !e->getReverse()->getDest()->isVisited() && e->getReverse()->getFlow() != 0){
-                s.push(e->getReverse()->getDest()->getName());
+
+        for (Edge* e: v->getAdj()){
+            if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0){
                 e->getDest()->setVisited(true);
                 e->getDest()->setPath(e);
-                if ( e->getDest()->getName() == dest){
-                    return true;
-                }
+                q.push(e->getDest());
             }
         }
-        s.pop();
-    }
-    return false;
-}
-double Graph:: findBottleneck(string& dest){
-    Vertex* v = findVertex(dest);
-    double bottleneck = std::numeric_limits<double>::max();
-    while(v->getPath() != nullptr){
-        double remaining = v->getPath()->getWeight() - v->getPath()->getFlow();
-        if (remaining < bottleneck){
-            bottleneck = remaining;
+
+        for(Edge* e: v->getIncoming()){
+            if (!e->getOrig()->isVisited() && e->getFlow() > 0){
+                e->getOrig()->setVisited(true);
+                e->getOrig()->setPath(e);
+                q.push(e->getOrig());
+            }
         }
-        v = v->getPath()->getOrig();
     }
+    return t->isVisited();
+}
+
+double Graph::findBottleneck(Vertex* s, Vertex* t, double maxSourceFlow){
+
+    double bottleneck = std::numeric_limits<double>::max();
+    for(Vertex* v = t; v!=s;){
+        Edge* e = v->getPath();
+        if(e->getDest()==v){
+            bottleneck = std::min(bottleneck, e->getWeight() - e->getFlow());
+            v = e->getOrig();
+        } else {
+            bottleneck = std::min(bottleneck, e->getFlow());
+            v = e->getDest();
+        }
+    }
+
+    double totalFlow = 0;
+    for (Edge* e : s->getIncoming()) {
+        totalFlow += e->getFlow();
+    }
+    bottleneck = std::min(bottleneck, maxSourceFlow - totalFlow);
+
+
     return bottleneck;
 }
-void Graph:: augmentedPath(string& dest, double bottleneck){
-    Vertex* v = findVertex(dest);
-    while(v->getPath() != nullptr){
-        v->getPath()->setFlow(v->getPath()->getFlow() + bottleneck);
-        v->getPath()->getReverse()->setFlow(v->getPath()->getReverse()->getFlow() - bottleneck);
-        v = v->getPath()->getOrig();
+
+void Graph::augmentedPath(Vertex* s, Vertex* t, double bottleneck){
+    for(Vertex* v = t; v!=s;){
+        Edge* e = v->getPath();
+        if(e->getDest()==v){
+            e->setFlow(e->getFlow() + bottleneck);
+            v = e->getOrig();
+        } else {
+            e->setFlow(e->getFlow() - bottleneck);
+            v = e->getDest();
+        }
     }
 }
+
 std::vector<Vertex*> Graph:: getInitialStops(){
     std::vector<Vertex*> res;
     for (Vertex* v: vertexSet){
         if (v->getIncoming().empty()) res.push_back(v);
     }
     return res;
+}
+
+bool Graph::removeVertex(const string &name) {
+    for (Vertex* v: vertexSet){
+        if (v->getName() == name){
+            for (Edge* e: v->getAdj()){
+                delete e;
+            }
+            vertexSet.erase(std::remove(vertexSet.begin(), vertexSet.end(), v), vertexSet.end());
+            delete v;
+            return true;
+        }
+    }
+    return false;
 }

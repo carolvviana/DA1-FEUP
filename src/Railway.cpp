@@ -8,8 +8,11 @@
 #include <sstream>
 #include <iomanip>
 #include <list>
+#include <unordered_map>
 
 using namespace std;
+
+Railway::Railway() = default;
 
 void Railway::createStations(const string& filepath) {
     ifstream file;
@@ -103,15 +106,13 @@ void Railway::createLines(const string &filepath) {
     }
 }
 
-Railway::Railway() = default;
-
 void Railway::cleanGraph() {
     graph.cleanGraph();
 }
 
-double Railway:: RmaxFlow(string& source, string& dest){
-    double result;
-    graph.maxFlow(source, dest);
+double Railway:: RmaxFlow(const string& source, const string& dest, double maxSourceFlow){
+    double result = 0;
+    graph.maxFlow(source, dest, maxSourceFlow);
     Vertex* v = graph.findVertex(dest);
     for (Edge* e :v->getIncoming()){
         result+=e->getFlow();
@@ -119,19 +120,63 @@ double Railway:: RmaxFlow(string& source, string& dest){
     return result;
 }
 
-std::vector<string> Railway::mostAmountOfTrains(){
+std::vector<pair<double, string>> Railway::mostAmountOfTrains(){
+    vector<pair<double, string>> result;
+
     //add a super source
-    Vertex SuperSource = Vertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");
+    graph.addVertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");
 
     //add edges from super source to all initial stops
     vector<Vertex*> initialStops = graph.getInitialStops();
     for(Vertex* v : initialStops){
-        graph.addEdge("SuperSource", v->getName(), INF , "SuperSource");
+        if(v->getName() != "SuperSource")
+            graph.addEdge("SuperSource", v->getName(), std::numeric_limits<double>::max() , "SuperSource");
     }
 
+
+    vector<Vertex *> vertexSet = graph.getVertexSet();
+    unordered_map<string, double> incomingFlows; //cache to store incoming flows from SuperSource to vertices
+
     //go through all combinations of stops
+    for(Vertex* a : vertexSet){
+        if(a->getName() == "SuperSource") continue;
 
+        //node A incomming flow
+        double Aflow;
+        if(incomingFlows.find(a->getName()) != incomingFlows.end()){
+            Aflow = incomingFlows[a->getName()];
+        }
+        else{
+            Aflow = RmaxFlow("SuperSource", a->getName(), std::numeric_limits<double>::max());
+            incomingFlows[a->getName()] = Aflow;
+        }
+        if(Aflow == 0) continue; //if no flow from super source to a, skip
 
+        for(Vertex* b : vertexSet){
+            if(b->getName() == "SuperSource") continue;
+
+            if(a->getName() != b->getName() && b->getName() != "SuperSource"){
+                //find the max flow from a to b
+                double maxFlow = RmaxFlow(a->getName(), b->getName(), Aflow);
+                //add to result
+                if(maxFlow > 0){
+                    result.push_back({maxFlow, a->getName() + " -> " + b->getName()});
+                }
+            }
+        }
+    }
+
+    //remove super source
+    graph.removeVertex("SuperSource");
+
+    //sort in descending order
+    sort(result.rbegin(), result.rend());
+
+    return result;
+}
+
+bool Railway::stationExists(const string& stationName) {
+    return graph.findVertex(stationName) != nullptr;
 }
 
 

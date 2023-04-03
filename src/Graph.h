@@ -25,6 +25,8 @@ public:
      */
     bool addVertex(const string &name,const string& district, const string& municipality, const string& township, const string& station_line);
 
+    bool removeVertex(const string &name);
+
     /*
      * Adds an edge to a graph (this), given the contents of the source and
      * destination vertices and the edge weight (w).
@@ -40,13 +42,16 @@ public:
 
 
     /**
-     * @brief Determine the maximum flow of a determined Graph
+     * @brief Determine the maximum flow of a determined Graph, this also takes into consideration the maximum flow of the source vertex which may not be infinite
+     * @param source - Name of the source vertex
+     * @param dest - Name of the destination vertex
+     * @param maxSourceFlow - Maximum flow of the source vertex
      * @return
      */
-    void maxFlow(string& source, string& dest);
-    bool path(string& source, string& dest);
-    double findBottleneck(string& dest);
-    void augmentedPath(string& dest, double bottleneck);
+    void maxFlow(const string& source, const string& dest, double maxSourceFlow);
+    bool path(Vertex* s, Vertex* t, double maxSourceFlow);
+    double findBottleneck(Vertex* s, Vertex* t, double maxSourceFlow);
+    void augmentedPath(Vertex* s, Vertex* t, double bottleneck);
     std::vector<Vertex*> getInitialStops();
 
 protected:
