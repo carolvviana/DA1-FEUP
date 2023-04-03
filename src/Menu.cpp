@@ -106,7 +106,16 @@ void Menu::mainMenu() {
             break;
         }
         case 2: {
-
+            /*
+            string a = "Famalicão";
+            string b = "Vila Nova de Gaia-Devesas";
+            railway.operationCost(a, b, 5);
+            break;
+             */
+            string a = "Lisboa Oriente";
+            string b = "Entroncamento";
+            double lol = railway.RmaxFlow(a, b);
+            cout << lol << "\n";
             break;
         }
         case 3: {

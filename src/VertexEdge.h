@@ -31,6 +31,8 @@ public:
     unsigned int getIndegree() const;
     double getDist() const;
     Edge *getPath() const;
+    double getCost() const;
+    Vertex* getPrev() const;
     std::vector<Edge *> getIncoming() const;
 
     void setVisited(bool visited);
@@ -38,8 +40,11 @@ public:
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPath(Edge *path);
+    void setCost(double cost);
+    void setPrev(Vertex *vertex);
     Edge * addEdge(Vertex *dest, double w, string service);
     bool removeEdge(const string& destName);
+    bool operator()(const Vertex* lhs, const Vertex* rhs) const;
 
     //friend class MutablePriorityQueue<Vertex>;
 protected:
@@ -57,6 +62,8 @@ protected:
     bool processing = false; // used by isDAG (in addition to the visited attribute)
     unsigned int indegree; // used by topsort
     double dist = 0;
+    double cost = 0;
+    Vertex *prev = nullptr;
     Edge *path = nullptr;
 
     std::vector<Edge *> incoming; // incoming edges

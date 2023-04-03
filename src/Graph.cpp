@@ -179,3 +179,59 @@ std::vector<Vertex*> Graph:: getInitialStops(){
     }
     return res;
 }
+
+
+
+void Graph::dijkstra(string& source, string& dest) {
+
+    priority_queue<Vertex *, vector<Vertex *>> stations;
+    unordered_set<Vertex *> notInStations;
+
+    for (Vertex *v: vertexSet) {
+        v->setCost(INT32_MAX);
+        v->setPrev(nullptr);
+        stations.push(v);
+    }
+    findVertex(source)->setCost(0);
+
+    while (!stations.empty()) {
+        Vertex *u = stations.top();
+        notInStations.insert(stations.top());
+        stations.pop();
+        if (u->getName() == dest) return;
+
+        for (Edge *v: u->getAdj()) {
+            if (notInStations.count(v->getDest()) >= 1) {
+                double alt = u->getCost() + (v->getWeight() * (v->getService() == "Standard" ? 2 : 4));
+                if (alt < v->getDest()->getCost()) {
+                    v->getDest()->setCost(alt);
+                    v->getDest()->setPrev(u);
+                }
+            }
+        }
+    }
+
+    cout << "lol";
+
+    cout << findVertex(source)->getName();
+    cout << findVertex(dest)->getName();
+
+
+    stack<Vertex *> path;
+    string target = dest;
+    Vertex* vertex = findVertex(dest)->getPrev();
+
+
+
+    cout << vertex->getName() << "\n";
+
+    if ((findVertex(target)->getPrev() != nullptr) || (findVertex(target) == findVertex(source))) {
+        cout << "inside if" << "\n";
+        while (findVertex(target) != nullptr) {
+            path.push(findVertex(target)->getPrev());
+            cout << findVertex(target)->getCost() << '\n';
+            cout << findVertex(target)->getName() << '\n';
+            target = findVertex(target)->getPrev()->getName();
+        }
+    }
+}

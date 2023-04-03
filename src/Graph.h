@@ -8,7 +8,8 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
-//#include "../data_structures/MutablePriorityQueue.h"
+#include <unordered_set>
+#include <stack>
 
 #include "VertexEdge.h"
 
@@ -48,6 +49,9 @@ public:
     double findBottleneck(string& dest);
     void augmentedPath(string& dest, double bottleneck);
     std::vector<Vertex*> getInitialStops();
+
+    void dijkstra(string& source, string& dest);
+
 
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set

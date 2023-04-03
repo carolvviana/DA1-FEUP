@@ -83,6 +83,14 @@ Edge *Vertex::getPath() const {
     return this->path;
 }
 
+double Vertex::getCost() const {
+    return this->cost;
+}
+
+Vertex* Vertex::getPrev() const {
+    return this->prev;
+}
+
 std::vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
@@ -106,6 +114,18 @@ void Vertex::setDist(double dist) {
 
 void Vertex::setPath(Edge *path) {
     this->path = path;
+}
+
+void Vertex::setCost(double cost) {
+    this->cost = cost;
+}
+
+void Vertex::setPrev(Vertex *vertex) {
+    this->prev = vertex;
+}
+
+bool Vertex::operator()(const Vertex* lhs, const Vertex* rhs) const {
+    return lhs->cost > rhs->cost;
 }
 
 /********************** Edge  ****************************/
