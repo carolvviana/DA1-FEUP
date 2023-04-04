@@ -47,7 +47,7 @@ public:
 
     struct CompareVertexPointers {
         bool operator()(const Vertex* v1, const Vertex* v2) {
-            return v1->cost > v2->cost;
+            return v1->dist > v2->dist;
         }
     };
 

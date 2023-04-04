@@ -106,14 +106,9 @@ void Menu::mainMenu() {
             break;
         }
         case 2: {
-            /*
-            string a = "Famalicão";
-            string b = "Vila Nova de Gaia-Devesas";
-            railway.operationCost(a, b, 5);
-            break;
-             */
-            string a = "Entrecampos";
-            string b = "Grândola";
+
+            string a = "Lisboa Oriente";
+            string b = "Coimbra B";
             railway.operationCost(a, b);
             break;
         }

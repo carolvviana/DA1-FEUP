@@ -212,7 +212,7 @@ bool Graph::dijkstra(string& source, string& dest, int& max_flow, int& min_cost)
 
             if (to->isVisited()) continue;
 
-            double cost = (v->getService() == "Standard" ? 4 : 2) * (v->getWeight() - v->getFlow());
+            double cost = (v->getService() == "STANDARD" ? 2 : 4) * (v->getWeight() - v->getFlow());
 
             if (to->getDist() > top->getDist() + cost) {
                 to->setDist(top->getDist() + cost);
@@ -225,23 +225,24 @@ bool Graph::dijkstra(string& source, string& dest, int& max_flow, int& min_cost)
     if (!findVertex(dest)->isVisited()) return false;
 
     double f = INF;
+    double segments = 0;
+    int temp;
 
     for (Vertex *v = findVertex(dest); v->getPrev() != nullptr; v = v->getPrev()->getOrig()) {
-        int temp = f;
         f = min(f, v->getPrev()->getWeight() - v->getPrev()->getFlow());
-        if (temp != f) {
-            continue;
+    }
+
+    for (Vertex *v = findVertex(dest); v->getPrev() != nullptr; v = v->getPrev()->getOrig()) {
+
+        if ("STANDARD" != v->getPrev()->getService()) {
+            min_cost += f * 4;
+        }
+        else {
+            min_cost += f * 2;
         }
     }
 
     max_flow = f;
-    min_cost = findVertex(dest)->getDist();
-
-    for (Vertex *v = findVertex(dest); v->getPrev() != nullptr; v = v->getPrev()->getOrig()) {
-        v->getPrev()->setFlow(v->getPrev()->getFlow() + f);
-        v->getPrev()->setCost(v->getPrev()->getCost() * -1);
-        v->getPrev()->getReverse()->setFlow(v->getPrev()->getReverse()->getFlow() - f);
-    }
 
     return true;
 }
