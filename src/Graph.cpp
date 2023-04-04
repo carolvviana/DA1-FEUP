@@ -182,56 +182,83 @@ std::vector<Vertex*> Graph:: getInitialStops(){
 
 
 
-void Graph::dijkstra(string& source, string& dest) {
+bool Graph::dijkstra(string& source, string& dest, int& max_flow, int& min_cost) {
 
-    priority_queue<Vertex *, vector<Vertex *>> stations;
-    unordered_set<Vertex *> notInStations;
+    priority_queue<Vertex *, vector<Vertex *>, Vertex::CompareVertexPointers> stations;
 
     for (Vertex *v: vertexSet) {
-        v->setCost(INT32_MAX);
+        v->setVisited(false);
+        v->setDist(INT32_MAX);
         v->setPrev(nullptr);
-        stations.push(v);
     }
-    findVertex(source)->setCost(0);
+
+    findVertex(source)->setDist(0);
+    stations.push(findVertex(source));
 
     while (!stations.empty()) {
-        Vertex *u = stations.top();
-        notInStations.insert(stations.top());
+        Vertex *top = stations.top();
         stations.pop();
-        if (u->getName() == dest) return;
 
-        for (Edge *v: u->getAdj()) {
-            if (notInStations.count(v->getDest()) >= 1) {
-                double alt = u->getCost() + (v->getWeight() * (v->getService() == "Standard" ? 2 : 4));
-                if (alt < v->getDest()->getCost()) {
-                    v->getDest()->setCost(alt);
-                    v->getDest()->setPrev(u);
-                }
+        if (top->isVisited()) continue;
+        top->setVisited(true);
+
+        if (top->getName() == dest) {
+            break;
+        }
+
+        for (Edge *v: top->getAdj()) {
+
+            Vertex *to = v->getDest();
+
+            if (to->isVisited()) continue;
+
+            double cost = (v->getService() == "Standard" ? 4 : 2) * (v->getWeight() - v->getFlow());
+
+            if (to->getDist() > top->getDist() + cost) {
+                to->setDist(top->getDist() + cost);
+                to->setPrev(v);
+                stations.push(to);
             }
         }
     }
 
-    cout << "lol";
+    if (!findVertex(dest)->isVisited()) return false;
 
-    cout << findVertex(source)->getName();
-    cout << findVertex(dest)->getName();
+    double f = INF;
 
-
-    stack<Vertex *> path;
-    string target = dest;
-    Vertex* vertex = findVertex(dest)->getPrev();
-
-
-
-    cout << vertex->getName() << "\n";
-
-    if ((findVertex(target)->getPrev() != nullptr) || (findVertex(target) == findVertex(source))) {
-        cout << "inside if" << "\n";
-        while (findVertex(target) != nullptr) {
-            path.push(findVertex(target)->getPrev());
-            cout << findVertex(target)->getCost() << '\n';
-            cout << findVertex(target)->getName() << '\n';
-            target = findVertex(target)->getPrev()->getName();
+    for (Vertex *v = findVertex(dest); v->getPrev() != nullptr; v = v->getPrev()->getOrig()) {
+        int temp = f;
+        f = min(f, v->getPrev()->getWeight() - v->getPrev()->getFlow());
+        if (temp != f) {
+            continue;
         }
     }
+
+    max_flow = f;
+    min_cost = findVertex(dest)->getDist();
+
+    for (Vertex *v = findVertex(dest); v->getPrev() != nullptr; v = v->getPrev()->getOrig()) {
+        v->getPrev()->setFlow(v->getPrev()->getFlow() + f);
+        v->getPrev()->setCost(v->getPrev()->getCost() * -1);
+        v->getPrev()->getReverse()->setFlow(v->getPrev()->getReverse()->getFlow() - f);
+    }
+
+    return true;
 }
+
+    bool Graph::max_flow_min_cost(string& source, string& dest, int& flow, int& cost) {
+        for (Vertex* v: vertexSet){
+            for (Edge* e: v->getIncoming()){
+                e->setFlow(0);
+
+                Edge* reverse = new Edge(e->getDest(), e->getOrig(), e->getWeight(), e->getService());
+                reverse->setFlow(0);
+                reverse->setReverse(e);
+                e->setReverse(reverse);
+            }
+        }
+
+        if (!dijkstra(source, dest, flow, cost)) return false;
+
+        return true;
+    }

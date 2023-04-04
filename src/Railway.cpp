@@ -134,23 +134,12 @@ std::vector<string> Railway::mostAmountOfTrains(){
 
 }
 
-void Railway::operationCost(string& source, string& dest, int mincost) {
-    graph.dijkstra(source, dest);
+void Railway::operationCost(string& source, string& dest) {
+    int flow = 0;
+    int cost = 0;
 
-    Vertex* target = graph.findVertex(dest);
-    stack<Vertex*> path;
-
-    // Erro pq????
-    cout << graph.findVertex(dest)->getPrev()->getName() << "\n";
-
-    if ((target->getPrev() != nullptr) || (target == graph.findVertex(source))) {
-        cout << "inside if" << "\n";
-        while (target != nullptr) {
-            path.push(target->getPrev());
-            cout << target->getCost() << '\n';
-            cout << target->getName() << '\n';
-            target = target->getPrev();
-        }
-    }
+    graph.max_flow_min_cost(source, dest, flow, cost);
+    cout << "Minimum cost: " << cost << "\n";
+    cout << "Flow: " << flow << "\n";
 }
 

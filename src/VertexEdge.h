@@ -32,7 +32,7 @@ public:
     double getDist() const;
     Edge *getPath() const;
     double getCost() const;
-    Vertex* getPrev() const;
+    Edge* getPrev() const;
     std::vector<Edge *> getIncoming() const;
 
     void setVisited(bool visited);
@@ -41,10 +41,15 @@ public:
     void setDist(double dist);
     void setPath(Edge *path);
     void setCost(double cost);
-    void setPrev(Vertex *vertex);
+    void setPrev(Edge *edge);
     Edge * addEdge(Vertex *dest, double w, string service);
     bool removeEdge(const string& destName);
-    bool operator()(const Vertex* lhs, const Vertex* rhs) const;
+
+    struct CompareVertexPointers {
+        bool operator()(const Vertex* v1, const Vertex* v2) {
+            return v1->cost > v2->cost;
+        }
+    };
 
     //friend class MutablePriorityQueue<Vertex>;
 protected:
@@ -63,7 +68,7 @@ protected:
     unsigned int indegree; // used by topsort
     double dist = 0;
     double cost = 0;
-    Vertex *prev = nullptr;
+    Edge *prev = nullptr;
     Edge *path = nullptr;
 
     std::vector<Edge *> incoming; // incoming edges
@@ -84,7 +89,9 @@ public:
     Vertex * getOrig() const;
     Edge *getReverse() const;
     double getFlow() const;
+    double getCost() const;
 
+    void setCost(double cost);
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
@@ -103,6 +110,7 @@ protected:
     Edge *reverse = nullptr;
 
     double flow; // for flow-related problems
+    double cost;
 };
 
 #endif /* DA_TP_CLASSES_VERTEX_EDGE */

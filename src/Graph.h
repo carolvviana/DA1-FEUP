@@ -50,7 +50,8 @@ public:
     void augmentedPath(string& dest, double bottleneck);
     std::vector<Vertex*> getInitialStops();
 
-    void dijkstra(string& source, string& dest);
+    bool dijkstra(string& source, string& dest, int& max_flow, int& min_cost);
+    bool max_flow_min_cost(string& source, string& sink, int& flow, int& cost);
 
 
 protected:

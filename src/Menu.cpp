@@ -112,10 +112,9 @@ void Menu::mainMenu() {
             railway.operationCost(a, b, 5);
             break;
              */
-            string a = "Lisboa Oriente";
-            string b = "Entroncamento";
-            double lol = railway.RmaxFlow(a, b);
-            cout << lol << "\n";
+            string a = "Entrecampos";
+            string b = "Grândola";
+            railway.operationCost(a, b);
             break;
         }
         case 3: {

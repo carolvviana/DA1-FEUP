@@ -87,7 +87,7 @@ double Vertex::getCost() const {
     return this->cost;
 }
 
-Vertex* Vertex::getPrev() const {
+Edge* Vertex::getPrev() const {
     return this->prev;
 }
 
@@ -120,12 +120,8 @@ void Vertex::setCost(double cost) {
     this->cost = cost;
 }
 
-void Vertex::setPrev(Vertex *vertex) {
-    this->prev = vertex;
-}
-
-bool Vertex::operator()(const Vertex* lhs, const Vertex* rhs) const {
-    return lhs->cost > rhs->cost;
+void Vertex::setPrev(Edge *edge) {
+    this->prev = edge;
 }
 
 /********************** Edge  ****************************/
@@ -156,8 +152,16 @@ double Edge::getFlow() const {
     return flow;
 }
 
+double Edge::getCost() const {
+    return cost;
+}
+
 void Edge::setSelected(bool selected) {
     this->selected = selected;
+}
+
+void Edge::setCost(double cost) {
+    this->cost = cost;
 }
 
 void Edge::setReverse(Edge *reverse) {
