@@ -398,13 +398,12 @@ std::vector<pair<double, string>> Railway::mostAmountOfTrains(){
     return result;
 }
 
-void Railway::operationCost(string& source, string& dest) {
+pair<int,int> Railway::operationCost(string& source, string& dest) {
     int flow = 0;
     int cost = 0;
 
     graph.max_flow_min_cost(source, dest, flow, cost);
-    cout << "Cost: " << cost << "\n";
-    cout << "Number of trains: " << flow << "\n";
+    return make_pair(flow, cost);
 }
 
 bool Railway::stationExists(const string& stationName) {
