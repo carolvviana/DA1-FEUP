@@ -8,7 +8,8 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
-//#include "../data_structures/MutablePriorityQueue.h"
+#include <unordered_set>
+#include <stack>
 
 #include "VertexEdge.h"
 
@@ -53,6 +54,10 @@ public:
     double findBottleneck(Vertex* s, Vertex* t, double maxSourceFlow);
     void augmentedPath(Vertex* s, Vertex* t, double bottleneck);
     std::vector<Vertex*> getInitialStops();
+
+    bool dijkstra(string& source, string& dest, int& max_flow, int& min_cost);
+    bool max_flow_min_cost(string& source, string& sink, int& flow, int& cost);
+
 
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set
