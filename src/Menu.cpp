@@ -283,11 +283,140 @@ void Menu::basicServiceMetrics(){
 }
 
 void Menu::operationsCostOptimization() {
+    do{
+        cout << "Operations Cost Optimization" << endl;
+        cout << "1 - Max number of trains with minimum cost for the company" << endl;
+        cout << "2 - Back" << endl;
+        cout << "3 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
 
+        if (this->option < 1 || this->option > 3) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 3);
+
+    switch (option) {
+        case 1: {
+            string station1, station2;
+
+            do {
+                cout << "Origin Station: ";
+                getline(cin, station1);
+                cout << "Destination Station: ";
+                getline(cin, station2);
+
+                if (!railway.stationExists(station1) || !railway.stationExists(station2)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while (!railway.stationExists(station1) || !railway.stationExists(station2));
+
+            cout << railway.operationCost(station1, station2).first << " trains can simultaneously travel between "<< station1 << " and " << station2 << " with a cost of " << railway.operationCost(station1, station2).second << "€." << endl;
+
+            cout << "Press enter to continue..." << endl;
+            std::cin.get(); // wait for user input
+            break;
+        }
+
+        case 2:{
+            //back
+            menuState.pop();
+            break;
+        }
+
+        case 3:{
+            //exit
+            clearStack();
+            break;
+        }
+    }
 }
 
 void Menu::reliabilityAndSensitivityToLineFailures() {
+    do{
+        cout << "Reliability and Sensitivity to line Failures" << endl;
+        cout << "1 - " << endl;
+        cout << "2 - " << endl;
+        cout << "3 - Back" << endl;
+        cout << "4 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
 
+        if (this->option < 1 || this->option > 4) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while (this->option < 1 || this->option > 4);
+
+    switch (option) {
+        case 1: {
+            /*
+            string station1, station2;
+
+            do {
+                cout << "Origin Station: ";
+                getline(cin, station1);
+                cout << "Destination Station: ";
+                getline(cin, station2);
+
+                if (!railway.stationExists(station1) || !railway.stationExists(station2)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while (!railway.stationExists(station1) || !railway.stationExists(station2));
+
+            cout << railway.operationCost(station1, station2).first << " trains can simultaneously travel between "<< station1 << " and " << station2 << " with a cost of " << railway.operationCost(station1, station2).second << "€." << endl;
+
+            cout << "Press enter to continue..." << endl;
+            std::cin.get(); // wait for user input
+             */
+            break;
+        }
+
+        case 2: {
+            /*
+            string station1, station2;
+
+            do {
+                cout << "Origin Station: ";
+                getline(cin, station1);
+                cout << "Destination Station: ";
+                getline(cin, station2);
+
+                if (!railway.stationExists(station1) || !railway.stationExists(station2)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while (!railway.stationExists(station1) || !railway.stationExists(station2));
+
+            cout << railway.operationCost(station1, station2).first << " trains can simultaneously travel between "<< station1 << " and " << station2 << " with a cost of " << railway.operationCost(station1, station2).second << "€." << endl;
+
+            cout << "Press enter to continue..." << endl;
+            std::cin.get(); // wait for user input
+             */
+            break;
+        }
+
+        case 3:{
+            //back
+            menuState.pop();
+            break;
+        }
+
+        case 4:{
+            //exit
+            clearStack();
+            break;
+        }
+    }
 }
 
 void Menu::clearStack() {
