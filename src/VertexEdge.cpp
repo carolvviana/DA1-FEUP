@@ -95,6 +95,12 @@ std::vector<Edge *> Vertex::getIncoming() const {
     return this->incoming;
 }
 
+string Vertex::getMunicipality() const{
+    return this->municipality;
+}
+string Vertex::getDistrict() const{
+    return this->district;
+}
 
 void Vertex::setVisited(bool visited) {
     this->visited = visited;
@@ -156,6 +162,10 @@ double Edge::getCost() const {
     return cost;
 }
 
+bool Edge::isAvailable() const {
+    return available;
+}
+
 void Edge::setSelected(bool selected) {
     this->selected = selected;
 }
@@ -171,15 +181,16 @@ void Edge::setReverse(Edge *reverse) {
 void Edge::setFlow(double flow) {
     this->flow = flow;
 }
+
+
 void Edge::setWeight(double weight) {
     this->weight = weight;
 }
 string Edge::getService() const{
     return this->service;
 }
-string Vertex::getMunicipality() const{
-    return this->municipality;
+
+void Edge::setAvailable(bool available) {
+    this->available = available;
 }
-string Vertex::getDistrict() const{
-    return this->district;
-}
+

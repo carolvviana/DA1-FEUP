@@ -148,7 +148,7 @@ bool Graph::path(Vertex* s, Vertex* t, double maxSourceFlow){
 
 
         for (Edge* e: v->getAdj()){
-            if (!e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0){
+            if (e->isAvailable() && !e->getDest()->isAvailable() && !e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0){
                 e->getDest()->setVisited(true);
                 e->getDest()->setPath(e);
                 q.push(e->getDest());
@@ -156,7 +156,7 @@ bool Graph::path(Vertex* s, Vertex* t, double maxSourceFlow){
         }
 
         for(Edge* e: v->getIncoming()){
-            if (!e->getOrig()->isVisited() && e->getFlow() > 0){
+            if (e->isAvailable() && !e->getDest()->isAvailable() && !e->getOrig()->isVisited() && e->getFlow() > 0){
                 e->getOrig()->setVisited(true);
                 e->getOrig()->setPath(e);
                 q.push(e->getOrig());

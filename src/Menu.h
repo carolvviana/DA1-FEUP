@@ -17,7 +17,8 @@ enum MenuState{
     MAIN_MENU,
     BASIC_SERVICE_METRICS,
     OPERATIONS_COST_OPTIMIZATION,
-    RELIABILITY_AND_SENSITIVITY_TO_LINE_FAILURES
+    RELIABILITY_AND_SENSITIVITY_TO_LINE_FAILURES,
+    SUBGRAPH_MAX_TRAINS
     // To add more menus, just add here
 };
 
@@ -69,6 +70,9 @@ private:
      * Reliability and Sensitivity to Line Failures menu
      */
     void reliabilityAndSensitivityToLineFailures();
+
+
+    void subgraphMaxTrains();
 
     /**
      * Function to clear the Menu stack

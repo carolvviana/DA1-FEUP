@@ -54,6 +54,8 @@ public:
     string getDistrict() const;
 
     //friend class MutablePriorityQueue<Vertex>;
+    bool isAvailable();
+
 protected:
 
     string name;
@@ -92,12 +94,15 @@ public:
     Edge *getReverse() const;
     double getFlow() const;
     double getCost() const;
+    bool isAvailable() const;
 
     void setCost(double cost);
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
     void setWeight(double weight);
+    void setAvailable(bool available);
+
 protected:
     Vertex * dest; // destination vertex
 
@@ -107,6 +112,7 @@ protected:
 
     // auxiliary fields
     bool selected = false;
+    bool available = true;
 
     // used for bidirectional edges
     Vertex *orig;

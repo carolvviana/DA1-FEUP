@@ -20,6 +20,7 @@ void Menu::getMenu() {
             case BASIC_SERVICE_METRICS: basicServiceMetrics(); break;
             case OPERATIONS_COST_OPTIMIZATION: operationsCostOptimization(); break;
             case RELIABILITY_AND_SENSITIVITY_TO_LINE_FAILURES: reliabilityAndSensitivityToLineFailures(); break;
+            case SUBGRAPH_MAX_TRAINS: subgraphMaxTrains(); break;
         }
     } else {
         railway.cleanGraph(); //to avoid memory leaks before leaving the programm
@@ -287,7 +288,48 @@ void Menu::operationsCostOptimization() {
 }
 
 void Menu::reliabilityAndSensitivityToLineFailures() {
+    do{
+        cout << "Line Reliability and Sensitivity" << endl;
+        cout << "1 - Max Trains on a subgraph" << endl;
+        cout << "2 - Report of most affected stations" << endl;
+        cout << "3 - Back" << endl;
+        cout << "4 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
 
+        if (this->option < 1 || this->option > 4) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+
+    } while(this->option < 1 || this->option > 4);
+
+    switch (option) {
+        case 1:{
+            menuState.push(SUBGRAPH_MAX_TRAINS);
+            break;
+        }
+        case 2:{
+
+            break;
+        }
+
+        case 3:{
+            //back
+            menuState.pop();
+            break;
+        }
+
+        case 4:{
+            //exit
+            clearStack();
+            break;
+        }
+    }
+
+    getMenu();
 }
 
 void Menu::clearStack() {
