@@ -397,6 +397,15 @@ std::vector<pair<double, string>> Railway::mostAmountOfTrains(){
     return result;
 }
 
+void Railway::operationCost(string& source, string& dest) {
+    int flow = 0;
+    int cost = 0;
+
+    graph.max_flow_min_cost(source, dest, flow, cost);
+    cout << "Cost: " << cost << "\n";
+    cout << "Number of trains: " << flow << "\n";
+}
+
 bool Railway::stationExists(const string& stationName) {
     return graph.findVertex(stationName) != nullptr;
 
@@ -502,6 +511,7 @@ std::vector<string> Railway::topKDistricts(int k){
     }
     return rtrn;
 }
+
 double Railway:: maxNumberOfTrainsArriving(string dest){
     //Vertex SuperSource = Vertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");
     graph.addVertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");

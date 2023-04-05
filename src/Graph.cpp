@@ -211,6 +211,87 @@ std::vector<Vertex*> Graph:: getInitialStops(){
     return res;
 }
 
+
+bool Graph::dijkstra(string& source, string& dest, int& max_flow, int& min_cost) {
+
+    priority_queue<Vertex *, vector<Vertex *>, Vertex::CompareVertexPointers> stations;
+
+    for (Vertex *v: vertexSet) {
+        v->setVisited(false);
+        v->setDist(INT32_MAX);
+        v->setPrev(nullptr);
+    }
+
+    findVertex(source)->setDist(0);
+    stations.push(findVertex(source));
+
+    while (!stations.empty()) {
+        Vertex *top = stations.top();
+        stations.pop();
+
+        if (top->isVisited()) continue;
+        top->setVisited(true);
+
+        if (top->getName() == dest) {
+            break;
+        }
+
+        for (Edge *v: top->getAdj()) {
+
+            Vertex *to = v->getDest();
+
+            if (to->isVisited()) continue;
+
+            double cost = (v->getService() == "STANDARD" ? 2 : 4) * (v->getWeight() - v->getFlow());
+
+            if (to->getDist() > top->getDist() + cost) {
+                to->setDist(top->getDist() + cost);
+                to->setPrev(v);
+                stations.push(to);
+            }
+        }
+    }
+
+    if (!findVertex(dest)->isVisited()) return false;
+
+    double f = INF;
+
+    for (Vertex *v = findVertex(dest); v->getPrev() != nullptr; v = v->getPrev()->getOrig()) {
+        f = min(f, v->getPrev()->getWeight() - v->getPrev()->getFlow());
+    }
+
+    for (Vertex *v = findVertex(dest); v->getPrev() != nullptr; v = v->getPrev()->getOrig()) {
+
+        if ("STANDARD" != v->getPrev()->getService()) {
+            min_cost += f * 4;
+        }
+        else {
+            min_cost += f * 2;
+        }
+    }
+
+    max_flow = f;
+
+    return true;
+}
+
+    bool Graph::max_flow_min_cost(string& source, string& dest, int& flow, int& cost) {
+        for (Vertex* v: vertexSet){
+            for (Edge* e: v->getIncoming()){
+                e->setFlow(0);
+
+                Edge* reverse = new Edge(e->getDest(), e->getOrig(), e->getWeight(), e->getService());
+                reverse->setFlow(0);
+                reverse->setReverse(e);
+                e->setReverse(reverse);
+            }
+        }
+
+        if (!dijkstra(source, dest, flow, cost)) return false;
+
+        return true;
+    }
+
 bool Graph::removeVertex(const string &name) {
     for (Vertex* v: vertexSet){
         if (v->getName() == name){

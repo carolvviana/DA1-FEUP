@@ -44,6 +44,10 @@ public:
      * @brief Cleans the graph to avoid memory leaks
      */
     void cleanGraph();
+    double RmaxFlow(string& source, string& dest);
+    std:: vector<string> mostAmountOfTrains();
+    void operationCost(string& source, string& dest);
+
 
     /**
      * @brief Calculates the maximum flow between two stations, using an adapted version of the Edmonds-Karp algorithm to take into consideration cases where the flow entering the source station is not infinite
