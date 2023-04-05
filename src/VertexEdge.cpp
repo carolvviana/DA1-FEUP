@@ -156,3 +156,6 @@ string Edge::getService() const{
 string Vertex::getMunicipality() const{
     return this->municipality;
 }
+string Vertex::getDistrict() const{
+    return this->district;
+}

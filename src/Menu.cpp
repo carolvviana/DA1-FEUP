@@ -54,7 +54,8 @@ void Menu::InitMenu() {
             railway.createLines();
             railway.createStationsMunicipalities();
             railway.createLinesMunicipalities();
-
+            railway.createStationsDistricts();
+            railway.createLinesDistricts();
 
             menuState.push(MAIN_MENU);
             break;
@@ -74,6 +75,8 @@ void Menu::InitMenu() {
             railway.createLines(lines_path);
             railway.createStationsMunicipalities(stations_path);
             railway.createLinesMunicipalities(lines_path);
+            railway.createStationsDistricts(stations_path);
+            railway.createLinesDistricts(lines_path);
 
             menuState.push(MAIN_MENU);
             break;
@@ -194,25 +197,49 @@ void Menu::basicServiceMetrics(){
         }
         case 3:{
             do{
-                cout << "1 -" << endl;
+                cout << "1 - Between Municipalities" << endl;
+                cout << "2 - Between Districts" << endl;
+                cout << "Option:" << endl;
+                cin >> this->option;
+
+                if (this->option < 1 || this->option > 2) {
+                    cout << "Invalid Option!" << endl;
+                }
+
+                cin.clear(); // clear input buffer to restore cin to a usable state
+                cin.ignore(1000, '\n'); // ignore last input
             } while(this->option < 1 || this->option > 3);
 
-            break;
-
+            string number;
+            vector<string> res;
             switch(this->option){
                 case 1:{
-
+                        cout << "How many municipalities do you want to cover?" << endl;
+                        getline(cin, number);
+                        //cout<< number <<endl;
+                    int k = stoi(number);
+                    res = railway.topKMunicipalities(k);
+                    cout << "These are the top-" << number << " of municipalities where management should assign the most budget" << endl;
+                    for (string s: res){
+                        cout << s << " | ";
+                    }
+                    cout << endl; cout << endl;
                     break;
                 }
                 case 2:{
-
-                    break;
-                }
-                case 3:{
-
+                    cout << "How many districts do you want to cover?" << endl;
+                    getline(cin, number);
+                    int k = stoi(number);
+                    res = railway.topKDistricts(k);
+                    cout << "These are the top-" << number << " of districts where management should assign the most budget" << endl;
+                    for (string s: res){
+                        cout << s << " | ";
+                    }
+                    cout << endl; cout << endl;
                     break;
                 }
             }
+            break;
 
         }
         case 4:{

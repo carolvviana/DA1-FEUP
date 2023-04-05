@@ -42,6 +42,7 @@ public:
     bool removeEdge(const string& destName);
 
     string getMunicipality() const;
+    string getDistrict() const;
 
     //friend class MutablePriorityQueue<Vertex>;
 protected:

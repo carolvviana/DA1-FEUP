@@ -18,6 +18,7 @@ private:
      */
     Graph graph;
     Graph graph_municipalities;
+    Graph graph_districts;
 public:
     /*
      * Constructor
@@ -35,7 +36,9 @@ public:
      */
     void createLines(const string& filepath = "../data/network.csv");
     void createStationsMunicipalities(const string& filepath = "../data/stations.csv");
+    void createStationsDistricts(const string& filepath = "../data/stations.csv");
     void createLinesMunicipalities(const string& filepath = "../data/network.csv");
+    void createLinesDistricts(const string &filepath = "../data/network.csv");
 
     /**
      * @brief Cleans the graph to avoid memory leaks
@@ -69,6 +72,8 @@ public:
     std::vector<string> topKMunicipalities(int k);
 
     double RmaxFlow_municipalities(string& source, string& dest);
+    double RmaxFlow_districts(string& source, string& dest);
+    std::vector<string> topKDistricts(int k);
     double maxNumberOfTrainsArriving(string dest);
 
 

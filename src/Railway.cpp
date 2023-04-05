@@ -110,6 +110,57 @@ void Railway::createStationsMunicipalities(const string& filepath) {
         graph_municipalities.addVertex(mun, "", "", "", "");
     }
 }
+void Railway::createStationsDistricts(const string& filepath) {
+    std::set<string> districts;
+    ifstream file;
+    file.open(filepath);
+    string line;
+
+    /* Check if file is open */
+    if(!file.is_open()){
+        cout << "Error opening file" << endl;
+        return;
+    }
+
+    /* Read the first line (labels) */
+    getline(file,line);
+
+    if(line != "Name,District,Municipality,Township,Line"){
+        cout << "Error reading file, wrong format of file" << endl;
+        return;
+    }
+
+    /* Read the rest of the file */
+    while(getline(file, line)){
+        istringstream iss(line);
+
+        /* Labels */
+        string name, district, municipality, township, station_line;
+        list<string* > labels = {&name, &district, &municipality, &township, &station_line};
+
+        for(string* label : labels) {
+            std::string labelData;
+
+            if (iss.peek() == '"') {
+                iss >> std::quoted(labelData);
+                std::string discard;
+                std::getline(iss, discard, ',');
+            }
+            else {
+                std::getline(iss, labelData, ',');
+            }
+
+            *label = labelData;
+        }
+
+        districts.insert(district);
+    }
+    districts.erase("");
+    for (string dis: districts){
+        graph_districts.addVertex(dis, "", "", "", "");
+    }
+}
+
 
 void Railway::createLines(const string &filepath) {
     ifstream file;
@@ -207,6 +258,57 @@ void Railway::createLinesMunicipalities(const string &filepath) {
     }
 }
 
+void Railway::createLinesDistricts(const string &filepath) {
+
+    ifstream file;
+    file.open(filepath);
+    string line;
+
+    /* Check if file is open */
+    if(!file.is_open()){
+        cout << "Error opening file" << endl;
+        return;
+    }
+
+    /* Read the first line (labels) */
+    getline(file,line);
+
+    if(line != "Station_A,Station_B,Capacity,Service"){
+        cout << "Error reading file, wrong format of file" << endl;
+        return;
+    }
+
+    /* Read the rest of the file */
+    while(getline(file, line)){
+        istringstream iss(line);
+
+        /* Labels */
+        string station_a, station_b, capacity, service;
+        list<string* > labels = {&station_a, &station_b, &capacity, &service};
+
+        for(string* label : labels) {
+            std::string labelData;
+
+            if (iss.peek() == '"') {
+                iss >> std::quoted(labelData);
+                std::string discard;
+                std::getline(iss, discard, ',');
+            }
+            else {
+                std::getline(iss, labelData, ',');
+            }
+
+            *label = labelData;
+        }
+        Vertex *source = graph.findVertex(station_a);
+        Vertex *dest = graph.findVertex(station_b);
+
+        if (source->getDistrict()!= dest->getDistrict()){
+            graph_districts.addEdge(source->getDistrict(), dest->getDistrict(), stoi(capacity), service);
+        }
+    }
+}
+
 void Railway::cleanGraph() {
     graph.cleanGraph();
     graph_municipalities.cleanGraph();
@@ -225,6 +327,15 @@ double Railway:: RmaxFlow_municipalities(string& source, string& dest){
     double result = 0;
     graph_municipalities.maxFlow(source, dest, std::numeric_limits<double>::max());
     Vertex* v = graph_municipalities.findVertex(dest);
+    for (Edge* e :v->getIncoming()){
+        result+=e->getFlow();
+    }
+    return result;
+}
+double Railway:: RmaxFlow_districts(string& source, string& dest){
+    double result = 0;
+    graph_districts.maxFlow(source, dest, std::numeric_limits<double>::max());
+    Vertex* v = graph_districts.findVertex(dest);
     for (Edge* e :v->getIncoming()){
         result+=e->getFlow();
     }
@@ -330,22 +441,58 @@ std::vector<string> Railway::topKMunicipalities(int k){
         for (auto e: v->getIncoming()){
             f += e->getFlow();
         }
-        res.push_back({v->getName(),f});
+        if (v->getName()!= "SuperSource" && v->getName()!= "SuperSink"){ res.push_back({v->getName(), f}); }
     }
 
-    //go through all combinations of stops
-    //for (auto it = initialStopsMunicipalities.begin(); it != initialStopsMunicipalities.end(); it++){
-        //for (Vertex *v: graph_municipalities.getVertexSet()) {
-    //for (string d: initialStopsMunicipalities) {
-            //string dest = v->getName();
-            //string source = s->getMunicipality();
-            //string source = *(it);
-            //string test= "FARO";
-            //double flow = RmaxFlow_municipalities(source, test);
-            //res.push_back({test, flow});
-            //rtrn.push_back(res[0].first);
-        //}
-    //}
+    std::sort(res.begin(), res.end(), [](auto &left, auto &right) {
+        return left.second > right.second;
+    });
+    for (int i = 1; i <= k; i++){
+        rtrn.push_back((res[i].first));
+    }
+    return rtrn;
+}
+std::vector<string> Railway::topKDistricts(int k){
+    vector<string> rtrn;
+    vector<pair<string, double>> res;
+
+
+    //add a super source
+    //Vertex SuperSource = Vertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");
+    graph_districts.addVertex("SuperSource", "SuperSource", "SuperSource", "SuperSource", "SuperSource");
+    graph_districts.addVertex("SuperSink", "SuperSink", "SuperSink", "SuperSink", "SuperSink");
+    //add edges from super source to all initial stops
+    vector<Vertex*> initialStops = graph.getInitialStops();
+    for(Vertex* v : initialStops){
+        graph_districts.addEdge("SuperSource", v->getMunicipality(), INF , "SuperSource");
+    }
+
+    vector<Vertex*> finalStops;
+    for (auto v: graph_districts.getVertexSet()){
+        if (v->getAdj().empty()){
+            finalStops.push_back(v);
+        }
+    }
+    for(Vertex* v : initialStops){
+        graph_districts.addEdge("SuperSource", v->getDistrict(), INF , "SuperSource");
+    }
+    for(Vertex* v : finalStops){
+        graph_districts.addEdge(v->getName(), "SuperSink", INF , "SuperSink");
+    }
+
+
+    string source = graph_districts.findVertex("SuperSource")->getName();
+    string sink = graph_districts.findVertex("SuperSink")->getName();
+
+    double flow = RmaxFlow_districts(source, sink);
+
+    for (auto v: graph_districts.getVertexSet()){
+        double f = 0;
+        for (auto e: v->getIncoming()){
+            f += e->getFlow();
+        }
+        if (v->getName()!= "SuperSource" && v->getName()!= "SuperSink"){ res.push_back({v->getName(), f}); }
+    }
 
     std::sort(res.begin(), res.end(), [](auto &left, auto &right) {
         return left.second > right.second;
