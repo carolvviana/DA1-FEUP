@@ -229,7 +229,12 @@ void Menu::basicServiceMetrics(){
                 case 2:{
                     cout << "How many districts do you want to cover?" << endl;
                     getline(cin, number);
+
                     int k = stoi(number);
+                    if (k < 1 || k > 17) {
+                        cout << "Invalid number!" << endl;
+                        break;
+                    }
                     res = railway.topKDistricts(k);
                     cout << "These are the top-" << number << " of districts where management should assign the most budget" << endl;
                     for (string s: res){

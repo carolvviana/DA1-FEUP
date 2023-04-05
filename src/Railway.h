@@ -45,7 +45,7 @@ public:
      */
     void cleanGraph();
     double RmaxFlow(string& source, string& dest);
-    std:: vector<string> mostAmountOfTrains();
+    //std:: vector<string> mostAmountOfTrains();
     void operationCost(string& source, string& dest);
 
 
