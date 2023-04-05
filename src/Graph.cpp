@@ -225,8 +225,6 @@ bool Graph::dijkstra(string& source, string& dest, int& max_flow, int& min_cost)
     if (!findVertex(dest)->isVisited()) return false;
 
     double f = INF;
-    double segments = 0;
-    int temp;
 
     for (Vertex *v = findVertex(dest); v->getPrev() != nullptr; v = v->getPrev()->getOrig()) {
         f = min(f, v->getPrev()->getWeight() - v->getPrev()->getFlow());

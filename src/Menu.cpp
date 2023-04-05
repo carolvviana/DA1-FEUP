@@ -107,8 +107,8 @@ void Menu::mainMenu() {
         }
         case 2: {
 
-            string a = "Lisboa Oriente";
-            string b = "Coimbra B";
+            string a = "Coimbra B";
+            string b = "Óbidos";
             railway.operationCost(a, b);
             break;
         }
