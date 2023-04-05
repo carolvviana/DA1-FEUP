@@ -14,7 +14,11 @@
  */
 enum MenuState{
     INIT_MENU, // Initial menu
-    MAIN_MENU // To add more menus, just add here
+    MAIN_MENU,
+    BASIC_SERVICE_METRICS,
+    OPERATIONS_COST_OPTIMIZATION,
+    RELIABILITY_AND_SENSITIVITY_TO_LINE_FAILURES
+    // To add more menus, just add here
 };
 
 /*
@@ -50,6 +54,27 @@ private:
      * Main menu of application
      */
     void mainMenu();
+
+    /**
+     * Basic Service Metrics menu
+     */
+    void basicServiceMetrics();
+
+    /**
+     * Operations Cost Optimization menu
+     */
+    void operationsCostOptimization();
+
+    /**
+     * Reliability and Sensitivity to Line Failures menu
+     */
+    void reliabilityAndSensitivityToLineFailures();
+
+    /**
+     * Function to clear the Menu stack
+     * This should be called before leaving the application to avoid memory leaks
+     */
+    void clearStack();
 
 public:
     /**

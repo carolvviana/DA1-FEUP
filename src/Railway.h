@@ -10,8 +10,6 @@
 
 using namespace std;
 
-
-
 class Railway {
 private:
 
@@ -19,7 +17,11 @@ private:
      *
      */
     Graph graph;
+    Graph graph_municipalities;
 public:
+    /*
+     * Constructor
+     */
     Railway();
 
     /**
@@ -32,11 +34,48 @@ public:
      * @return
      */
     void createLines(const string& filepath = "../data/network.csv");
+    void createStationsMunicipalities(const string& filepath = "../data/stations.csv");
+    void createLinesMunicipalities(const string& filepath = "../data/network.csv");
 
+    /**
+     * @brief Cleans the graph to avoid memory leaks
+     */
     void cleanGraph();
     double RmaxFlow(string& source, string& dest);
     std:: vector<string> mostAmountOfTrains();
     void operationCost(string& source, string& dest);
+
+
+    /**
+     * @brief Calculates the maximum flow between two stations, using an adapted version of the Edmonds-Karp algorithm to take into consideration cases where the flow entering the source station is not infinite
+     * Leaving the 3rd parameter empty will calculate the maximum flow between the two stations, with an infinite flow entering the source station, which is the default case for the Edmonds-Karp algorithm
+     * @param source
+     * @param dest
+     * @param maxSourceFlow
+     * @return
+     */
+    double RmaxFlow(const string& source, const string& dest, double maxSourceFlow = numeric_limits<double>::max());
+
+    /**
+     *
+     * @return
+     */
+    std::vector<pair<double, string>> mostAmountOfTrains();
+
+
+    /**
+     * @brief Checks if a station exists
+     * @param stationName - name of the station to check
+     * @return
+     */
+    bool stationExists(const string& stationName);
+
+    std::vector<string> topKMunicipalities(int k);
+
+    double RmaxFlow_municipalities(string& source, string& dest);
+    double maxNumberOfTrainsArriving(string dest);
+
+
 };
 
 

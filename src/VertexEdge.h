@@ -50,6 +50,7 @@ public:
             return v1->dist > v2->dist;
         }
     };
+    string getMunicipality() const;
 
     //friend class MutablePriorityQueue<Vertex>;
 protected:
@@ -95,6 +96,7 @@ public:
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
+    void setWeight(double weight);
 protected:
     Vertex * dest; // destination vertex
 

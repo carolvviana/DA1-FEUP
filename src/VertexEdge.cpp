@@ -171,6 +171,12 @@ void Edge::setReverse(Edge *reverse) {
 void Edge::setFlow(double flow) {
     this->flow = flow;
 }
+void Edge::setWeight(double weight) {
+    this->weight = weight;
+}
 string Edge::getService() const{
     return this->service;
+}
+string Vertex::getMunicipality() const{
+    return this->municipality;
 }
