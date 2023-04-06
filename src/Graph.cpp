@@ -300,15 +300,32 @@ bool Graph::removeVertex(const string &name) {
     for (Vertex* v: vertexSet){
         if (v->getName() == name){
 
-            for (Edge* e: v->getAdj()){
-                delete e;
+            if (!(v->getAdj().empty()) && v->getName() != "SuperSink"){
+                for (Edge *e: v->getAdj()) {
+                    delete e;
+                }
+                v->getAdj().clear();
             }
-            v->getAdj().clear();
-            for (Edge* e: v->getIncoming()){
-                delete e;
+            /*int i = 0;
+            while (i<v->getIncoming().size()){
+                if (v->getName() == "SuperSink" && i ==0){
+                    i++;
+                }
+                else{
+                    delete v->getIncoming()[i];
+                    i++;
+                }
             }
             v->getIncoming().clear();
+             */
+            if (!(v->getIncoming().empty()) && v->getName() != "SuperSource"){
+                for (Edge *e: v->getIncoming()) {
+                    delete e;
+                }
+                v->getIncoming().clear();
+            }
             vertexSet.erase(std::remove(vertexSet.begin(), vertexSet.end(), v), vertexSet.end());
+            //auto it = remove(vertexSet.begin(), vertexSet.end(), v);
             delete v;
             return true;
         }

@@ -79,10 +79,10 @@ public:
     double RmaxFlow_municipalities(string& source, string& dest);
     double RmaxFlow_districts(string& source, string& dest);
     std::vector<string> topKDistricts(int k);
+    std::vector<string> topKStations(int k);
     double maxNumberOfTrainsArriving(string dest);
 
     void resetGraph();
-
 };
 
 
