@@ -34,6 +34,7 @@ public:
     double getCost() const;
     Edge* getPrev() const;
     std::vector<Edge *> getIncoming() const;
+    bool isEnabled() const;
 
     void setVisited(bool visited);
     void setProcesssing(bool processing);
@@ -44,6 +45,8 @@ public:
     void setPrev(Edge *edge);
     Edge * addEdge(Vertex *dest, double w, string service);
     bool removeEdge(const string& destName);
+    void setEnabled(bool enabled);
+    bool disableEdge(const string& destName);
 
     struct CompareVertexPointers {
         bool operator()(const Vertex* v1, const Vertex* v2) {
@@ -63,6 +66,7 @@ protected:
     string municipality;
     string township;
     string station_line;
+    bool enabled = true;
 
     std::vector<Edge *> adj;  // outgoing edges
 
@@ -94,14 +98,14 @@ public:
     Edge *getReverse() const;
     double getFlow() const;
     double getCost() const;
-    bool isAvailable() const;
+    bool isEnabled() const;
 
     void setCost(double cost);
     void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
     void setWeight(double weight);
-    void setAvailable(bool available);
+    void setEnabled(bool enabled);
 
 protected:
     Vertex * dest; // destination vertex
@@ -112,7 +116,7 @@ protected:
 
     // auxiliary fields
     bool selected = false;
-    bool available = true;
+    bool enabled = true;
 
     // used for bidirectional edges
     Vertex *orig;

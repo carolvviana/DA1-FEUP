@@ -165,6 +165,7 @@ void Menu::basicServiceMetrics(){
             string station1, station2;
 
             do {
+
                 cout << "Origin Station: ";
                 getline(cin, station1);
                 cout << "Destination Station: ";
@@ -180,6 +181,7 @@ void Menu::basicServiceMetrics(){
 
             cout << "Press enter to continue..." << endl;
             std::cin.get(); // wait for user input
+
             break;
         }
         case 2:{
@@ -187,6 +189,7 @@ void Menu::basicServiceMetrics(){
             cout << "Should take around 1 minute" << endl;
 
             std::vector<pair<double, string>>  result = railway.mostAmountOfTrains();
+
             for (int i = 0; i < 10; i++) {
                 auto s = result.at(i);
                 cout << "  " << s.first << " " << s.second <<'\n';
@@ -194,6 +197,7 @@ void Menu::basicServiceMetrics(){
 
             cout << "Press enter to continue..." << endl;
             std::cin.get(); // wait for user input
+
             break;
         }
         case 3:{
@@ -209,22 +213,27 @@ void Menu::basicServiceMetrics(){
 
                 cin.clear(); // clear input buffer to restore cin to a usable state
                 cin.ignore(1000, '\n'); // ignore last input
+
             } while(this->option < 1 || this->option > 3);
 
             string number;
             vector<string> res;
+
             switch(this->option){
                 case 1:{
-                        cout << "How many municipalities do you want to cover?" << endl;
-                        getline(cin, number);
-                        //cout<< number <<endl;
+
+                    cout << "How many municipalities do you want to cover?" << endl;
+                    getline(cin, number);
+
                     int k = stoi(number);
                     res = railway.topKMunicipalities(k);
+
                     cout << "These are the top-" << number << " of municipalities where management should assign the most budget" << endl;
                     for (string s: res){
                         cout << s << " | ";
                     }
                     cout << endl; cout << endl;
+
                     break;
                 }
                 case 2:{
@@ -242,6 +251,7 @@ void Menu::basicServiceMetrics(){
                         cout << s << " | ";
                     }
                     cout << endl; cout << endl;
+
                     break;
                 }
             }
@@ -317,7 +327,8 @@ void Menu::operationsCostOptimization() {
 
             } while (!railway.stationExists(station1) || !railway.stationExists(station2));
 
-            cout << railway.operationCost(station1, station2).first << " trains can simultaneously travel between "<< station1 << " and " << station2 << " with a cost of " << railway.operationCost(station1, station2).second << "€." << endl;
+            pair<int, double> result = railway.operationCost(station1, station2);
+            cout << result.first << " trains can simultaneously travel between "<< station1 << " and " << station2 << " with a cost of " << result.second << endl;
 
             cout << "Press enter to continue..." << endl;
             std::cin.get(); // wait for user input
@@ -336,6 +347,8 @@ void Menu::operationsCostOptimization() {
             break;
         }
     }
+
+    getMenu();
 }
 
 void Menu::reliabilityAndSensitivityToLineFailures() {
@@ -363,7 +376,7 @@ void Menu::reliabilityAndSensitivityToLineFailures() {
             break;
         }
         case 2:{
-
+            //carol
             break;
         }
 
@@ -382,6 +395,92 @@ void Menu::reliabilityAndSensitivityToLineFailures() {
 
     getMenu();
 
+}
+
+void Menu::subgraphMaxTrains() {
+    do{
+        cout << "Max Trains on a subgraph" << endl;
+        cout << "1 - Disable a station on the subgraph" << endl;
+        cout << "2 - Disable a line on the subgraph" << endl;
+        cout << "3 - Calculate Max Number of Trains in Subgraph" << endl;
+        cout << "3 - Back" << endl;
+        cout << "4 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 4) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+    } while(this->option < 1 || this->option > 4);
+
+    switch(option){
+        case 1:{
+            string station;
+            do {
+                cout << "Station: ";
+                getline(cin, station);
+
+                if (!railway.stationExists(station)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while(!railway.stationExists(station));
+
+            if(!railway.disableStation(station)){
+                cout << "Station does not exist!" << endl;
+            }
+
+            break;
+        }
+
+        case 2:{
+            string station1, station2;
+
+            do {
+                cout << "Origin Station: ";
+                getline(cin, station1);
+                cout << "Destination Station: ";
+                getline(cin, station2);
+
+                if (!railway.stationExists(station1) || !railway.stationExists(station2)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while (!railway.stationExists(station1) || !railway.stationExists(station2));
+
+            if(!railway.disableLine(station1, station2)){
+                cout << "Line does not exist! Please make sure the line is a direct connection between two Stations" << endl;
+            }
+
+            break;
+        }
+        case 3:{
+            cout << "This may take a while :)" << endl;
+            cout << "Should take around 1 minute" << endl;
+
+            std::vector<pair<double, string>> result = railway.mostAmountOfTrains();
+
+            for (int i = 0; i < 10; i++) {
+                auto s = result.at(i);
+                cout << "  " << s.first << " " << s.second <<'\n';
+            }
+            cout << "Press enter to continue..." << endl;
+            std::cin.get(); // wait for user input
+            railway.resetGraph();
+            break;
+        }
+        case 4:
+            menuState.pop();
+            break;
+        case 5:
+            clearStack();
+            break;
+    }
+
+    getMenu();
 }
 
 void Menu::clearStack() {

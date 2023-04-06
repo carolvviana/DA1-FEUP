@@ -130,6 +130,24 @@ void Vertex::setPrev(Edge *edge) {
     this->prev = edge;
 }
 
+bool Vertex::isEnabled() const {
+    return enabled;
+}
+
+void Vertex::setEnabled(bool enabled) {
+    this->enabled = enabled;
+}
+
+bool Vertex::disableEdge(const string &destName) {
+    for (auto & edge : adj) {
+        if (edge->getDest()->getName() == destName) {
+            edge->setEnabled(false);
+            return true;
+        }
+    }
+    return false;
+}
+
 /********************** Edge  ****************************/
 
 Edge::Edge(Vertex *orig, Vertex *dest, double w, string service): orig(orig), dest(dest), weight(w), service(service) {}
@@ -162,8 +180,8 @@ double Edge::getCost() const {
     return cost;
 }
 
-bool Edge::isAvailable() const {
-    return available;
+bool Edge::isEnabled() const {
+    return enabled;
 }
 
 void Edge::setSelected(bool selected) {
@@ -190,7 +208,7 @@ string Edge::getService() const{
     return this->service;
 }
 
-void Edge::setAvailable(bool available) {
-    this->available = available;
+void Edge::setEnabled(bool enabled) {
+    this->enabled = enabled;
 }
 

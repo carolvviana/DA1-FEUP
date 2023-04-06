@@ -104,6 +104,7 @@ void Graph::cleanGraph() {
 void Graph :: maxFlow(const string& source, const string& dest, double maxSourceFlow){
     Vertex* s = findVertex(source);
     Vertex* t = findVertex(dest);
+
     if(s == nullptr || t == nullptr){
         cout << "Source or destination not found" << endl;
         return;
@@ -135,6 +136,9 @@ bool Graph::path(Vertex* s, Vertex* t, double maxSourceFlow){
     while(!q.empty() && !t->isVisited()){
         Vertex* v = q.front(); q.pop();
 
+        if(!v->isEnabled()){
+            continue;
+        }
 
         if (v == s) {
             double totalFlow = 0;
@@ -146,9 +150,8 @@ bool Graph::path(Vertex* s, Vertex* t, double maxSourceFlow){
             }
         }
 
-
         for (Edge* e: v->getAdj()){
-            if (e->isAvailable() && !e->getDest()->isAvailable() && !e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0){
+            if (e->isEnabled() && !e->getDest()->isVisited() && e->getWeight() - e->getFlow() > 0){
                 e->getDest()->setVisited(true);
                 e->getDest()->setPath(e);
                 q.push(e->getDest());
@@ -156,13 +159,14 @@ bool Graph::path(Vertex* s, Vertex* t, double maxSourceFlow){
         }
 
         for(Edge* e: v->getIncoming()){
-            if (e->isAvailable() && !e->getDest()->isAvailable() && !e->getOrig()->isVisited() && e->getFlow() > 0){
+            if (e->isEnabled() && !e->getOrig()->isVisited() && e->getFlow() > 0){
                 e->getOrig()->setVisited(true);
                 e->getOrig()->setPath(e);
                 q.push(e->getOrig());
             }
         }
     }
+
     return t->isVisited();
 }
 
@@ -295,9 +299,15 @@ bool Graph::dijkstra(string& source, string& dest, int& max_flow, int& min_cost)
 bool Graph::removeVertex(const string &name) {
     for (Vertex* v: vertexSet){
         if (v->getName() == name){
+
             for (Edge* e: v->getAdj()){
                 delete e;
             }
+            v->getAdj().clear();
+            for (Edge* e: v->getIncoming()){
+                delete e;
+            }
+            v->getIncoming().clear();
             vertexSet.erase(std::remove(vertexSet.begin(), vertexSet.end(), v), vertexSet.end());
             delete v;
             return true;

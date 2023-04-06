@@ -39,13 +39,14 @@ public:
     void createStationsDistricts(const string& filepath = "../data/stations.csv");
     void createLinesMunicipalities(const string& filepath = "../data/network.csv");
     void createLinesDistricts(const string &filepath = "../data/network.csv");
+    bool disableStation(const string& stationName);
+    bool disableLine(const string& origStation, const string& destStation);
 
     /**
      * @brief Cleans the graph to avoid memory leaks
      */
     void cleanGraph();
-    double RmaxFlow(string& source, string& dest);
-    //std:: vector<string> mostAmountOfTrains();
+
     pair<int,int> operationCost(string& source, string& dest);
 
 
@@ -80,6 +81,7 @@ public:
     std::vector<string> topKDistricts(int k);
     double maxNumberOfTrainsArriving(string dest);
 
+    void resetGraph();
 
 };
 
