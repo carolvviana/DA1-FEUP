@@ -162,7 +162,6 @@ void Railway::createStationsDistricts(const string& filepath) {
     }
 }
 
-
 void Railway::createLines(const string &filepath) {
     ifstream file;
     file.open(filepath);
@@ -207,6 +206,8 @@ void Railway::createLines(const string &filepath) {
 
         graph.addEdge(station_a, station_b, stoi(capacity), service);
     }
+
+    graph.setInitialStops();
 }
 
 void Railway::createLinesMunicipalities(const string &filepath) {
@@ -326,6 +327,7 @@ double Railway:: RmaxFlow(const string& source, const string& dest, double maxSo
     }
     return result;
 }
+
 double Railway:: RmaxFlow_municipalities(string& source, string& dest){
     double result = 0;
     graph_municipalities.maxFlow(source, dest, std::numeric_limits<double>::max());
@@ -335,6 +337,7 @@ double Railway:: RmaxFlow_municipalities(string& source, string& dest){
     }
     return result;
 }
+
 double Railway:: RmaxFlow_districts(string& source, string& dest){
     double result = 0;
     graph_districts.maxFlow(source, dest, std::numeric_limits<double>::max());
@@ -359,9 +362,10 @@ std::vector<pair<double, string>> Railway::mostAmountOfTrains(){
     }
 
     vector<Vertex *> vertexSet = graph.getVertexSet();
-    unordered_map<string, double> incomingFlows; //cache to store incoming flows from SuperSource to vertices
+    static unordered_map<string, double> incomingFlows; //cache to store incoming flows from SuperSource to vertices
 
     //go through all combinations of stops
+
     for(Vertex* a : vertexSet){
         if(a->getName() == "SuperSource") continue;
 
@@ -568,9 +572,11 @@ void Railway::resetGraph() {
         for(auto e : v->getAdj()){
             e->setEnabled(true);
         }
+
         for(auto e : v->getIncoming()){
             e->setEnabled(true);
         }
+
         v->setEnabled(true);
     }
 }

@@ -102,14 +102,14 @@ void Menu::mainMenu() {
         cout << "Option: ";
         cin >> this->option;
 
-        if (this->option < 1 || this->option > 4) {
+        if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
 
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
 
-    } while (this->option < 1 || this->option > 4);
+    } while (this->option < 1 || this->option > 5);
 
     switch(this->option){
         case 1: {
@@ -190,9 +190,13 @@ void Menu::basicServiceMetrics(){
 
             std::vector<pair<double, string>>  result = railway.mostAmountOfTrains();
 
-            for (int i = 0; i < 10; i++) {
-                auto s = result.at(i);
-                cout << "  " << s.first << " " << s.second <<'\n';
+            if(result.empty()){
+                cout << "No Trains can travel on the subgraph" << endl;
+            } else {
+                for (int i = 0; i < 10; i++) {
+                    auto s = result.at(i);
+                    cout << "  " << s.first << " " << s.second <<'\n';
+                }
             }
 
             cout << "Press enter to continue..." << endl;
@@ -403,18 +407,19 @@ void Menu::subgraphMaxTrains() {
         cout << "1 - Disable a station on the subgraph" << endl;
         cout << "2 - Disable a line on the subgraph" << endl;
         cout << "3 - Calculate Max Number of Trains in Subgraph" << endl;
-        cout << "3 - Back" << endl;
-        cout << "4 - Exit" << endl;
+        cout << "4 - Back" << endl;
+        cout << "5 - Exit" << endl;
         cout << "Option: ";
         cin >> this->option;
 
-        if (this->option < 1 || this->option > 4) {
+        if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
 
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
-    } while(this->option < 1 || this->option > 4);
+
+    } while(this->option < 1 || this->option > 5);
 
     switch(option){
         case 1:{
@@ -463,10 +468,15 @@ void Menu::subgraphMaxTrains() {
 
             std::vector<pair<double, string>> result = railway.mostAmountOfTrains();
 
-            for (int i = 0; i < 10; i++) {
-                auto s = result.at(i);
-                cout << "  " << s.first << " " << s.second <<'\n';
+            if(result.empty()){
+                cout << "No Trains can travel on the subgraph" << endl;
+            } else {
+                for (int i = 0; i < 10; i++) {
+                    auto s = result.at(i);
+                    cout << "  " << s.first << " " << s.second <<'\n';
+                }
             }
+
             cout << "Press enter to continue..." << endl;
             std::cin.get(); // wait for user input
             railway.resetGraph();

@@ -96,8 +96,16 @@ void Graph::cleanGraph() {
         for(auto e : v->getAdj()){
             delete e;
         }
+        v->getAdj().clear();
+
+//        for(auto e : v->getIncoming()){
+//            delete e;
+//        }
+//        v->getIncoming().clear();
+
         delete v;
     }
+
     vertexSet.clear();
 }
 
@@ -208,11 +216,13 @@ void Graph::augmentedPath(Vertex* s, Vertex* t, double bottleneck){
 }
 
 std::vector<Vertex*> Graph:: getInitialStops(){
-    std::vector<Vertex*> res;
+    return initialStops;
+}
+
+void Graph::setInitialStops() {
     for (Vertex* v: vertexSet){
-        if (v->getIncoming().empty()) res.push_back(v);
+        if (v->getIncoming().empty()) initialStops.push_back(v);
     }
-    return res;
 }
 
 
@@ -279,22 +289,22 @@ bool Graph::dijkstra(string& source, string& dest, int& max_flow, int& min_cost)
     return true;
 }
 
-    bool Graph::max_flow_min_cost(string& source, string& dest, int& flow, int& cost) {
-        for (Vertex* v: vertexSet){
-            for (Edge* e: v->getIncoming()){
-                e->setFlow(0);
+bool Graph::max_flow_min_cost(string& source, string& dest, int& flow, int& cost) {
+    for (Vertex* v: vertexSet){
+        for (Edge* e: v->getIncoming()){
+            e->setFlow(0);
 
-                Edge* reverse = new Edge(e->getDest(), e->getOrig(), e->getWeight(), e->getService());
-                reverse->setFlow(0);
-                reverse->setReverse(e);
-                e->setReverse(reverse);
-            }
+            Edge* reverse = new Edge(e->getDest(), e->getOrig(), e->getWeight(), e->getService());
+            reverse->setFlow(0);
+            reverse->setReverse(e);
+            e->setReverse(reverse);
         }
-
-        if (!dijkstra(source, dest, flow, cost)) return false;
-
-        return true;
     }
+
+    if (!dijkstra(source, dest, flow, cost)) return false;
+
+    return true;
+}
 
 bool Graph::removeVertex(const string &name) {
     for (Vertex* v: vertexSet){
@@ -304,10 +314,12 @@ bool Graph::removeVertex(const string &name) {
                 delete e;
             }
             v->getAdj().clear();
-            for (Edge* e: v->getIncoming()){
-                delete e;
-            }
-            v->getIncoming().clear();
+
+//            for (Edge* e: v->getIncoming()){
+//                delete e;
+//            }
+//            v->getIncoming().clear();
+
             vertexSet.erase(std::remove(vertexSet.begin(), vertexSet.end(), v), vertexSet.end());
             delete v;
             return true;

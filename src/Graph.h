@@ -54,6 +54,7 @@ public:
     double findBottleneck(Vertex* s, Vertex* t, double maxSourceFlow);
     void augmentedPath(Vertex* s, Vertex* t, double bottleneck);
     std::vector<Vertex*> getInitialStops();
+    void setInitialStops();
 
     bool dijkstra(string& source, string& dest, int& max_flow, int& min_cost);
     bool max_flow_min_cost(string& source, string& sink, int& flow, int& cost);
@@ -61,6 +62,7 @@ public:
 
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set
+    std::vector<Vertex *> initialStops; // initial stops of the graph (those with no incoming edges)
 
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
     int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
