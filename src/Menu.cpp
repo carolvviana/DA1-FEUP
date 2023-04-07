@@ -21,6 +21,7 @@ void Menu::getMenu() {
             case OPERATIONS_COST_OPTIMIZATION: operationsCostOptimization(); break;
             case RELIABILITY_AND_SENSITIVITY_TO_LINE_FAILURES: reliabilityAndSensitivityToLineFailures(); break;
             case SUBGRAPH_MAX_TRAINS: subgraphMaxTrains(); break;
+            case SUBGRAPH_MOST_SENSITIVE: subgraphMostSensitive(); break;
         }
     } else {
         railway.cleanGraph(); //to avoid memory leaks before leaving the programm
@@ -380,7 +381,7 @@ void Menu::reliabilityAndSensitivityToLineFailures() {
             break;
         }
         case 2:{
-            //carol
+            menuState.push(SUBGRAPH_MOST_SENSITIVE);
             break;
         }
 
@@ -492,6 +493,98 @@ void Menu::subgraphMaxTrains() {
 
     getMenu();
 }
+void Menu::subgraphMostSensitive() {
+    do{
+        cout << "Stations Most Affected by Failures" << endl;
+        cout << "1 - Disable a station on the subgraph" << endl;
+        cout << "2 - Disable a line on the subgraph" << endl;
+        cout << "3 - Calculate Most Affected Stations (by that failure)" << endl;
+        cout << "4 - Back" << endl;
+        cout << "5 - Exit" << endl;
+        cout << "Option: ";
+        cin >> this->option;
+
+        if (this->option < 1 || this->option > 4) {
+            cout << "Invalid Option!" << endl;
+        }
+
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(1000, '\n'); // ignore last input
+    } while(this->option < 1 || this->option > 4);
+
+    switch(option){
+        case 1:{
+            string station;
+            do {
+                cout << "Station: ";
+                getline(cin, station);
+
+                if (!railway.stationExists(station)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while(!railway.stationExists(station));
+
+            if(!railway.disableStation(station)){
+                cout << "Station does not exist!" << endl;
+            }
+
+            break;
+        }
+
+        case 2:{
+            string station1, station2;
+
+            do {
+                cout << "Origin Station: ";
+                getline(cin, station1);
+                cout << "Destination Station: ";
+                getline(cin, station2);
+
+                if (!railway.stationExists(station1) || !railway.stationExists(station2)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while (!railway.stationExists(station1) || !railway.stationExists(station2));
+
+            if(!railway.disableLine(station1, station2)){
+                cout << "Line does not exist! Please make sure the line is a direct connection between two Stations" << endl;
+            }
+
+            break;
+        }
+        case 3:{
+            string number;
+            vector<string> res;
+            cout << "Review for how many stations?" << endl;
+
+            getline(cin, number);
+
+            int k = stoi(number);
+            res = railway.topKStations(k);
+            cout << "Here are the top-" << number << " stations that are most affected by failures:" << endl;
+
+            for (string s: res){
+                cout << s << " | ";
+            }
+            cout <<endl;
+
+            cout << "Press enter to continue..." << endl;
+            std::cin.get(); // wait for user input
+            railway.resetGraph();
+            break;
+        }
+        case 4:
+            menuState.pop();
+            break;
+        case 5:
+            clearStack();
+            break;
+    }
+
+    getMenu();
+}
+
 
 void Menu::clearStack() {
     while(!this->menuState.empty()){
