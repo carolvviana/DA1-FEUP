@@ -59,8 +59,10 @@ void Railway::createStations(const string& filepath) {
         }
 
         graph.addVertex(name, district, municipality, township, station_line);
+        originalStations.push_back({name, district, municipality, township, station_line});
     }
 }
+
 void Railway::createStationsMunicipalities(const string& filepath) {
     std::set<string> municipalities;
     ifstream file;
@@ -204,7 +206,10 @@ void Railway::createLines(const string &filepath) {
             *label = labelData;
         }
 
-        graph.addEdge(station_a, station_b, stoi(capacity), service);
+        if(graph.findVertex(station_a) != nullptr && graph.findVertex(station_b) != nullptr)
+            graph.addEdge(station_a, station_b, stoi(capacity), service);
+
+        originalLines.push_back({station_a, station_b, capacity, service});
     }
 
     graph.setInitialStops();
@@ -255,8 +260,11 @@ void Railway::createLinesMunicipalities(const string &filepath) {
         Vertex *source = graph.findVertex(station_a);
         Vertex *dest = graph.findVertex(station_b);
 
-        if (source->getMunicipality()!= dest->getMunicipality()){
-            graph_municipalities.addEdge(source->getMunicipality(), dest->getMunicipality(), stoi(capacity), service);
+        if(graph_municipalities.findVertex(station_a) != nullptr && graph_municipalities.findVertex(station_b) != nullptr){
+            if (source->getMunicipality() != dest->getMunicipality()) {
+                graph_municipalities.addEdge(source->getMunicipality(), dest->getMunicipality(), stoi(capacity),
+                                             service);
+            }
         }
     }
 }
@@ -307,8 +315,10 @@ void Railway::createLinesDistricts(const string &filepath) {
         Vertex *source = graph.findVertex(station_a);
         Vertex *dest = graph.findVertex(station_b);
 
-        if (source->getDistrict() != dest->getDistrict()){
-            graph_districts.addEdge(source->getDistrict(), dest->getDistrict(), stoi(capacity), service);
+        if(graph_districts.findVertex(station_a) != nullptr && graph_districts.findVertex(station_b) != nullptr){
+            if (source->getDistrict() != dest->getDistrict()) {
+                graph_districts.addEdge(source->getDistrict(), dest->getDistrict(), stoi(capacity), service);
+            }
         }
     }
 }
@@ -316,6 +326,7 @@ void Railway::createLinesDistricts(const string &filepath) {
 void Railway::cleanGraph() {
     graph.cleanGraph();
     graph_municipalities.cleanGraph();
+    graph_districts.cleanGraph();
 }
 
 double Railway:: RmaxFlow(const string& source, const string& dest, double maxSourceFlow){

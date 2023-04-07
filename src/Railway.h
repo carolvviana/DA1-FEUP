@@ -16,6 +16,7 @@ private:
     /**
      *
      */
+
     Graph graph;
     Graph graph_municipalities;
     Graph graph_districts;
@@ -83,6 +84,10 @@ public:
     double maxNumberOfTrainsArriving(string dest);
 
     void resetGraph();
+
+    std::vector<tuple<string, string, string, string, string>> originalStations;
+    std::vector<tuple<string, string, string, string>> originalLines;
+
 };
 
 

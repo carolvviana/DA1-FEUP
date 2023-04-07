@@ -119,7 +119,7 @@ protected:
     bool enabled = true;
 
     // used for bidirectional edges
-    Vertex *orig;
+    Vertex *orig = nullptr;
     Edge *reverse = nullptr;
 
     double flow; // for flow-related problems

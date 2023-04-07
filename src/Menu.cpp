@@ -194,7 +194,7 @@ void Menu::basicServiceMetrics(){
             if(result.empty()){
                 cout << "No Trains can travel on the subgraph" << endl;
             } else {
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 3; i++) {
                     auto s = result.at(i);
                     cout << "  " << s.first << " " << s.second <<'\n';
                 }
