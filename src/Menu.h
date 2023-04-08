@@ -83,11 +83,16 @@ private:
      */
     void clearStack();
 
+    string stationsFilepath = "../data/stations.csv";
+    string linesFilepath= "../data/network.csv";
+
 public:
     /**
      * Constructor of Menu class
      */
     Menu();
+
+
 };
 
 

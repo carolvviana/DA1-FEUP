@@ -18,39 +18,6 @@ Edge * Vertex::addEdge(Vertex *d, double w, string service){
     return newEdge;
 }
 
-/*
- * Auxiliary function to remove an outgoing edge (with a given destination (d))
- * from a vertex (this).
- * Returns true if successful, and false if such edge does not exist.
- */
-bool Vertex::removeEdge(const string& destName) {
-    bool removedEdge = false;
-    auto it = adj.begin();
-    while (it != adj.end()) {
-        Edge *edge = *it;
-        Vertex *dest = edge->getDest();
-        if (dest->getName() == destName) {
-            it = adj.erase(it);
-            // Also remove the corresponding edge from the incoming list
-            auto it2 = dest->incoming.begin();
-            while (it2 != dest->incoming.end()) {
-                if ((*it2)->getOrig()->getName() == name) {
-                    it2 = dest->incoming.erase(it2);
-                }
-                else {
-                    it2++;
-                }
-            }
-            delete edge;
-            removedEdge = true; // allows for multiple edges to connect the same pair of vertices (multigraph)
-        }
-        else {
-            it++;
-        }
-    }
-    return removedEdge;
-}
-
 bool Vertex::operator<(Vertex & vertex) const {
     return this->dist < vertex.dist;
 }
@@ -67,13 +34,6 @@ bool Vertex::isVisited() const {
     return this->visited;
 }
 
-bool Vertex::isProcessing() const {
-    return this->processing;
-}
-
-unsigned int Vertex::getIndegree() const {
-    return this->indegree;
-}
 
 double Vertex::getDist() const {
     return this->dist;
@@ -81,10 +41,6 @@ double Vertex::getDist() const {
 
 Edge *Vertex::getPath() const {
     return this->path;
-}
-
-double Vertex::getCost() const {
-    return this->cost;
 }
 
 Edge* Vertex::getPrev() const {
@@ -106,13 +62,6 @@ void Vertex::setVisited(bool visited) {
     this->visited = visited;
 }
 
-void Vertex::setProcesssing(bool processing) {
-    this->processing = processing;
-}
-
-void Vertex::setIndegree(unsigned int indegree) {
-    this->indegree = indegree;
-}
 
 void Vertex::setDist(double dist) {
     this->dist = dist;
@@ -122,9 +71,6 @@ void Vertex::setPath(Edge *path) {
     this->path = path;
 }
 
-void Vertex::setCost(double cost) {
-    this->cost = cost;
-}
 
 void Vertex::setPrev(Edge *edge) {
     this->prev = edge;
@@ -164,32 +110,12 @@ Vertex * Edge::getOrig() const {
     return this->orig;
 }
 
-Edge *Edge::getReverse() const {
-    return this->reverse;
-}
-
-bool Edge::isSelected() const {
-    return this->selected;
-}
-
 double Edge::getFlow() const {
     return flow;
 }
 
-double Edge::getCost() const {
-    return cost;
-}
-
 bool Edge::isEnabled() const {
     return enabled;
-}
-
-void Edge::setSelected(bool selected) {
-    this->selected = selected;
-}
-
-void Edge::setCost(double cost) {
-    this->cost = cost;
 }
 
 void Edge::setReverse(Edge *reverse) {
@@ -200,10 +126,6 @@ void Edge::setFlow(double flow) {
     this->flow = flow;
 }
 
-
-void Edge::setWeight(double weight) {
-    this->weight = weight;
-}
 string Edge::getService() const{
     return this->service;
 }

@@ -34,9 +34,7 @@ public:
      * Returns true if successful, and false if the source or destination vertex does not exist.
      */
     bool addEdge(const string &source, const string &dest, double w, const string& service);
-    bool addBidirectionalEdge(const string &source, const string &dest, double w, const string& service);
 
-    int getNumVertex() const;
     std::vector<Vertex *> getVertexSet() const;
 
     void cleanGraph();
@@ -67,10 +65,7 @@ protected:
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
     int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall
 
-    /*
-     * Finds the index of the vertex with a given content.
-     */
-    int findVertexIdx(const string &id) const;
+
 };
 
 void deleteMatrix(int **m, int n);

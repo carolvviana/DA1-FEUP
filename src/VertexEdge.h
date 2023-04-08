@@ -27,24 +27,19 @@ public:
     std::string getName() const;
     std::vector<Edge *> getAdj() const;
     bool isVisited() const;
-    bool isProcessing() const;
-    unsigned int getIndegree() const;
+
     double getDist() const;
     Edge *getPath() const;
-    double getCost() const;
+
     Edge* getPrev() const;
     std::vector<Edge *> getIncoming() const;
     bool isEnabled() const;
 
     void setVisited(bool visited);
-    void setProcesssing(bool processing);
-    void setIndegree(unsigned int indegree);
     void setDist(double dist);
     void setPath(Edge *path);
-    void setCost(double cost);
     void setPrev(Edge *edge);
     Edge * addEdge(Vertex *dest, double w, string service);
-    bool removeEdge(const string& destName);
     void setEnabled(bool enabled);
     bool disableEdge(const string& destName);
 
@@ -56,8 +51,6 @@ public:
     string getMunicipality() const;
     string getDistrict() const;
 
-    //friend class MutablePriorityQueue<Vertex>;
-    bool isAvailable();
 
 protected:
 
@@ -93,18 +86,11 @@ public:
     Vertex * getDest() const;
     double getWeight() const;
     string getService() const;
-    bool isSelected() const;
     Vertex * getOrig() const;
-    Edge *getReverse() const;
     double getFlow() const;
-    double getCost() const;
     bool isEnabled() const;
-
-    void setCost(double cost);
-    void setSelected(bool selected);
     void setReverse(Edge *reverse);
     void setFlow(double flow);
-    void setWeight(double weight);
     void setEnabled(bool enabled);
 
 protected:
