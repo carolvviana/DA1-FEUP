@@ -52,12 +52,8 @@ void Menu::InitMenu() {
             /* clean the graph if it already exists */
             railway.cleanGraph();
 
-            railway.createStations();
-            railway.createLines();
-            railway.createStationsMunicipalities();
-            railway.createLinesMunicipalities();
-            railway.createStationsDistricts();
-            railway.createLinesDistricts();
+            /* read default files */
+            railway.buildGraph(stationsFilepath, linesFilepath);
 
             menuState.push(MAIN_MENU);
             break;
@@ -67,18 +63,12 @@ void Menu::InitMenu() {
             railway.cleanGraph();
 
             /* ask for file paths */
-            string stations_path, lines_path;
             cout << "Stations file path: ";
-            getline(cin, stations_path);
+            getline(cin, stationsFilepath);
             cout << "Lines file path: ";
-            getline(cin, lines_path);
+            getline(cin, linesFilepath);
 
-            railway.createStations(stations_path);
-            railway.createLines(lines_path);
-            railway.createStationsMunicipalities(stations_path);
-            railway.createLinesMunicipalities(lines_path);
-            railway.createStationsDistricts(stations_path);
-            railway.createLinesDistricts(lines_path);
+            railway.buildGraph(stationsFilepath, linesFilepath);
 
             menuState.push(MAIN_MENU);
             break;
@@ -91,6 +81,8 @@ void Menu::InitMenu() {
 
     getMenu();
 }
+
+
 
 void Menu::mainMenu() {
     do{
@@ -201,6 +193,10 @@ void Menu::basicServiceMetrics(){
             }
 
             cout << "Press enter to continue..." << endl;
+
+            railway.cleanGraph();
+            railway.buildGraph(stationsFilepath, linesFilepath);
+
             std::cin.get(); // wait for user input
 
             break;
@@ -479,8 +475,12 @@ void Menu::subgraphMaxTrains() {
             }
 
             cout << "Press enter to continue..." << endl;
+
+            railway.cleanGraph();
+            railway.buildGraph(stationsFilepath, linesFilepath);
+
             std::cin.get(); // wait for user input
-            railway.resetGraph();
+
             break;
         }
         case 4:

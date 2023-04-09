@@ -458,7 +458,7 @@ std::vector<string> Railway::topKMunicipalities(int k){
     string source = graph_municipalities.findVertex("SuperSource")->getName();
     string sink = graph_municipalities.findVertex("SuperSink")->getName();
 
-    double flow = RmaxFlow_municipalities(source, sink);
+    RmaxFlow_municipalities(source, sink);
 
     for (auto v: graph_municipalities.getVertexSet()){
         double f = 0;
@@ -509,7 +509,7 @@ std::vector<string> Railway::topKStations(int k){
     string source = graph.findVertex("SuperSource")->getName();
     string sink = graph.findVertex("SuperSink")->getName();
 
-    double flow = RmaxFlow(source, sink);
+    RmaxFlow(source, sink);
 
     for (auto v: graph.getVertexSet()){
         if (v->isEnabled()){
@@ -563,7 +563,7 @@ std::vector<string> Railway::topKDistricts(int k){
     string source = graph_districts.findVertex("SuperSource")->getName();
     string sink = graph_districts.findVertex("SuperSink")->getName();
 
-    double flow = RmaxFlow_districts(source, sink);
+    RmaxFlow_districts(source, sink);
 
     for (auto v: graph_districts.getVertexSet()){
         double f = 0;
@@ -647,6 +647,7 @@ void Railway::resetGraph() {
     }
 }
 
+<<<<<<< HEAD
 /*void Railway:: setOGGraph(){
     graph.cleanGraph();
     for (auto p: originalStations){
@@ -656,3 +657,13 @@ void Railway::resetGraph() {
         graph.addEdge(get<0>(p),get<1>(p),(stod)(get<2>(p)),get<3>(p));
     }
 }*/
+=======
+void Railway::buildGraph(const string &stations_path, const string &lines_path) {
+    createStations(stations_path);
+    createLines(lines_path);
+    createStationsMunicipalities(stations_path);
+    createLinesMunicipalities(lines_path);
+    createStationsDistricts(stations_path);
+    createLinesDistricts(lines_path);
+}
+>>>>>>> da3de362d82d36df50b20b80a726a15b4c8a2bf7

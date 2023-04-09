@@ -2,9 +2,6 @@
 
 #include "Graph.h"
 
-int Graph::getNumVertex() const {
-    return vertexSet.size();
-}
 
 std::vector<Vertex *> Graph::getVertexSet() const {
     return vertexSet;
@@ -20,15 +17,6 @@ Vertex * Graph::findVertex(const string &name) const {
     return nullptr;
 }
 
-/*
- * Finds the index of the vertex with a given content.
- */
-int Graph::findVertexIdx(const string &name) const {
-    for (unsigned i = 0; i < vertexSet.size(); i++)
-        if (vertexSet[i]->getName() == name)
-            return i;
-    return -1;
-}
 /*
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
@@ -51,18 +39,6 @@ bool Graph::addEdge(const string &source, const string &dest, double w, const st
     if (v1 == nullptr || v2 == nullptr)
         return false;
     v1->addEdge(v2, w, service);
-    return true;
-}
-
-bool Graph::addBidirectionalEdge(const string &source, const string &dest, double w, const string& service) {
-    auto v1 = findVertex(source);
-    auto v2 = findVertex(dest);
-    if (v1 == nullptr || v2 == nullptr)
-        return false;
-    auto e1 = v1->addEdge(v2, w, service);
-    auto e2 = v2->addEdge(v1, w, service);
-    e1->setReverse(e2);
-    e2->setReverse(e1);
     return true;
 }
 
@@ -94,20 +70,30 @@ void Graph::cleanGraph() {
     for (auto v : vertexSet){
 
         for(auto e : v->getAdj()){
-            delete e;
+            if(e != nullptr)
+                delete e;
         }
         v->getAdj().clear();
 
+<<<<<<< HEAD
         /*if ( v->getName() != "SuperSource"){
             for (auto e: v->getIncoming()) {
                 delete e;
             }
             v->getIncoming().clear();
         }*/
+=======
+//        for(auto e : v->getIncoming()){
+//            if(e != nullptr)
+//                delete e;
+//        }
+//        v->getIncoming().clear();
+>>>>>>> da3de362d82d36df50b20b80a726a15b4c8a2bf7
 
         delete v;
     }
     vertexSet.clear();
+    initialStops.clear();
 }
 
 void Graph :: maxFlow(const string& source, const string& dest, double maxSourceFlow){

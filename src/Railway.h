@@ -20,6 +20,7 @@ private:
     Graph graph;
     Graph graph_municipalities;
     Graph graph_districts;
+
 public:
     /*
      * Constructor
@@ -28,18 +29,28 @@ public:
 
     /**
      * @brief Creates the stations of the railway
+     * Time Complexity: O(V^2) where V is the number of vertices
+     * @param filepath - Path to the file containing the stations
      */
     void createStations(const string& filepath = "../data/stations.csv");
 
     /**
-     * @brief Creates the lines of the railway
-     * @return
+     * @brief Creates the stations of the railway
+     * @param filepath
      */
-    void createLines(const string& filepath = "../data/network.csv");
     void createStationsMunicipalities(const string& filepath = "../data/stations.csv");
     void createStationsDistricts(const string& filepath = "../data/stations.csv");
+
+    /**
+     * @brief Creates the lines of the railway
+     * Time complexity: O(V^2) where V is the number of vertices
+     * @param filepath - Path to the file containing the lines
+     */
+    void createLines(const string& filepath = "../data/network.csv");
+
     void createLinesMunicipalities(const string& filepath = "../data/network.csv");
     void createLinesDistricts(const string &filepath = "../data/network.csv");
+
     bool disableStation(const string& stationName);
     bool disableLine(const string& origStation, const string& destStation);
 
@@ -67,7 +78,6 @@ public:
      */
     std::vector<pair<double, string>> mostAmountOfTrains();
 
-
     /**
      * @brief Checks if a station exists
      * @param stationName - name of the station to check
@@ -89,7 +99,8 @@ public:
     std::vector<tuple<string, string, string, string, string>> originalStations;
     std::vector<tuple<string, string, string, string>> originalLines;
 
-};
+    void buildGraph(const string &stations_path, const string &lines_path);
 
+};
 
 #endif //PROJETO_DA_1_RAILWAY_H
