@@ -206,10 +206,10 @@ void Railway::createLines(const string &filepath) {
             *label = labelData;
         }
 
-        if(graph.findVertex(station_a) != nullptr && graph.findVertex(station_b) != nullptr)
+        if(graph.findVertex(station_a) != nullptr && graph.findVertex(station_b) != nullptr) {
             graph.addEdge(station_a, station_b, stoi(capacity), service);
-
-        originalLines.push_back({station_a, station_b, capacity, service});
+            originalLines.push_back({station_a, station_b, capacity, service});
+        }
     }
 
     graph.setInitialStops();
@@ -410,6 +410,8 @@ std::vector<pair<double, string>> Railway::mostAmountOfTrains(){
 
     //sort in descending order
     sort(result.rbegin(), result.rend());
+
+    //setOGGraph();
 
     return result;
 }
@@ -644,3 +646,13 @@ void Railway::resetGraph() {
         v->setEnabled(true);
     }
 }
+
+/*void Railway:: setOGGraph(){
+    graph.cleanGraph();
+    for (auto p: originalStations){
+        graph.addVertex(get<0>(p),get<1>(p),get<2>(p),get<3>(p),get<4>(p));
+    }
+    for (auto p: originalLines){
+        graph.addEdge(get<0>(p),get<1>(p),(stod)(get<2>(p)),get<3>(p));
+    }
+}*/

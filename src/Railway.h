@@ -84,6 +84,7 @@ public:
     double maxNumberOfTrainsArriving(string dest);
 
     void resetGraph();
+    //void setOGGraph();
 
     std::vector<tuple<string, string, string, string, string>> originalStations;
     std::vector<tuple<string, string, string, string>> originalLines;

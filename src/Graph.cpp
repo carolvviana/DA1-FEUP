@@ -98,14 +98,15 @@ void Graph::cleanGraph() {
         }
         v->getAdj().clear();
 
-//        for(auto e : v->getIncoming()){
-//            delete e;
-//        }
-//        v->getIncoming().clear();
+        /*if ( v->getName() != "SuperSource"){
+            for (auto e: v->getIncoming()) {
+                delete e;
+            }
+            v->getIncoming().clear();
+        }*/
 
         delete v;
     }
-
     vertexSet.clear();
 }
 
