@@ -125,7 +125,7 @@ public:
 
     /**
      * @brief Calculates the maximum flow between every pair of stations, using RmaxFlow() function to take into consideration cases where the flow entering the source station is not infinite
-     * Time Complexity:
+     * Time Complexity: O(E * V^4)
      * @return A vector of pairs, where the first element is the maximum flow between the two stations and the second element is the name of those stations
      */
     std::vector<pair<double, string>> mostAmountOfTrains();
@@ -158,21 +158,22 @@ public:
 
     /**
      * @brief Calculates the Top K districts with the bigger budget needs (Districts with bigger maximum flow need bigger budgets)
+     * Time Complexity: O(E * V^2)
      * @param k Number of districts to return
      * @return A vector of strings with the names of the Top K districts, ordered
      */
     std::vector<string> topKDistricts(int k);
 
     /**
-     * @brief
-     * @param k
-     * @return
+     * @brief Calculates flow in every station when taking into account the whole network
+     * Time Complexity: O(E * V^2)
+     * @return vector of pairs (station name, flow)
      */
     std::vector<pair<string,double>> StationsFlow();
 
     /**
      * @brief Calculates the Top K municipalities with the bigger budget needs (Municipalities with bigger maximum flow need bigger budgets)
-     * Time Complexity:
+     * Time Complexity: O(E * V^2)
      * @param k Number of municipalities to return
      * @return A vector of strings with the names of the Top K municipalities, ordered
      */
