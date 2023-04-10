@@ -504,13 +504,13 @@ void Menu::subgraphMostSensitive() {
         cout << "Option: ";
         cin >> this->option;
 
-        if (this->option < 1 || this->option > 4) {
+        if (this->option < 1 || this->option > 5) {
             cout << "Invalid Option!" << endl;
         }
 
         cin.clear(); // clear input buffer to restore cin to a usable state
         cin.ignore(1000, '\n'); // ignore last input
-    } while(this->option < 1 || this->option > 4);
+    } while(this->option < 1 || this->option > 5);
 
     switch(option){
         case 1:{
@@ -555,39 +555,68 @@ void Menu::subgraphMostSensitive() {
         }
         case 3:{
             string number;
+            vector<pair<string,double>> res_affected;
+            vector<pair<string,double>> res_og;
+            vector<pair<string,double>> comp;
+
             vector<string> res;
             cout << "Review for how many stations?" << endl;
 
             getline(cin, number);
 
             int k = stoi(number);
-            res = railway.topKStations(k);
-            cout << "Here are the top-" << number << " stations that are most affected by failures:" << endl;
-
-            for (string s: res){
-                cout << s << " | ";
-            }
-            cout << endl;
-
-            cout << "Press enter to continue..." << endl;
-            std::cin.get(); // wait for user input
+            res_affected = railway.StationsFlow();
             railway.resetGraph();
-            break;
-        }
-        case 4:
-            menuState.pop();
-            break;
-        case 5:
-            clearStack();
-            break;
-    }
+            res_og = railway.StationsFlow();
 
-    getMenu();
+            int n = stoi(number);
+            for (pair<string,double> p1: res_affected){
+                for(pair<string,double> p2: res_og){
+                    if (p1.first == p2.first){
+                        comp.push_back({p1.first, max(p1.second - p2.second, -1*(p1.second - p2.second))});
+                        //cout << p1.second << " " << p2.second << endl;
+                    }
+                }
+            }
+            std::sort(comp.begin(), comp.end(), [](auto &left, auto &right) {
+            return left.second > right.second;
+            });
+
+            for (int i = 0; i < n; i++){
+                res.push_back(comp[i].first);
+                cout << comp[i].first << endl;
+                cout << comp[i].second << endl;
+            }
+
+    cout << "Here are the top-" << number << " stations that are most affected by failures:" << endl;
+
+    for (string s: res){
+        cout << s << " | ";
+    }
+    cout << endl;
+
+    cout << "Press enter to continue..." << endl;
+
+    std::cin.get(); // wait for user input
+
+    //railway.cleanGraph();
+    //railway.buildGraph(stationsFilepath, linesFilepath);
+    break;
+}
+case 4:
+    menuState.pop();
+    break;
+case 5:
+    clearStack();
+    break;
+}
+
+getMenu();
 }
 
 
 void Menu::clearStack() {
-    while(!this->menuState.empty()){
-        this->menuState.pop();
-    }
+while(!this->menuState.empty()){
+this->menuState.pop();
+}
 }

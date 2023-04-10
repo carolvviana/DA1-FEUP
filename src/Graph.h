@@ -84,7 +84,9 @@ public:
     void augmentedPath(Vertex* s, Vertex* t, double bottleneck);
 
     std::vector<Vertex*> getInitialStops();
+    std::vector<Vertex*> getFinalStops();
     void setInitialStops();
+    void setFinalStops();
 
     /**
      * @brief Finds the shortest path between two stations
@@ -112,6 +114,7 @@ public:
 protected:
     std::vector<Vertex *> vertexSet;    // vertex set
     std::vector<Vertex *> initialStops; // initial stops of the graph (those with no incoming edges)
+    std::vector<Vertex *> finalStops;
 
     double ** distMatrix = nullptr;   // dist matrix for Floyd-Warshall
     int **pathMatrix = nullptr;   // path matrix for Floyd-Warshall

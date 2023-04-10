@@ -212,6 +212,7 @@ void Railway::createLines(const string &filepath) {
     }
 
     graph.setInitialStops();
+    graph.setFinalStops();
 }
 
 void Railway::createLinesMunicipalities(const string &filepath) {
@@ -259,7 +260,7 @@ void Railway::createLinesMunicipalities(const string &filepath) {
         Vertex *source = graph.findVertex(station_a);
         Vertex *dest = graph.findVertex(station_b);
 
-        if(graph_municipalities.findVertex(station_a) != nullptr && graph_municipalities.findVertex(station_b) != nullptr){
+        if(graph_municipalities.findVertex(source->getMunicipality()) != nullptr && graph_municipalities.findVertex(dest->getMunicipality()) != nullptr){
             if (source->getMunicipality() != dest->getMunicipality()) {
                 graph_municipalities.addEdge(source->getMunicipality(), dest->getMunicipality(), stoi(capacity),
                                              service);
@@ -314,7 +315,7 @@ void Railway::createLinesDistricts(const string &filepath) {
         Vertex *source = graph.findVertex(station_a);
         Vertex *dest = graph.findVertex(station_b);
 
-        if(graph_districts.findVertex(station_a) != nullptr && graph_districts.findVertex(station_b) != nullptr){
+        if(graph_districts.findVertex(source->getDistrict()) != nullptr && graph_districts.findVertex(dest->getDistrict()) != nullptr){
             if (source->getDistrict() != dest->getDistrict()) {
                 graph_districts.addEdge(source->getDistrict(), dest->getDistrict(), stoi(capacity), service);
             }
@@ -437,33 +438,48 @@ std::vector<string> Railway::topKMunicipalities(int k){
 
     //add edges from super source to all initial stops
     vector<Vertex*> initialStops = graph.getInitialStops();
+    vector<string> initialMun;
     for(Vertex* v : initialStops){
+        //cout << v->getMunicipality() << endl;
         graph_municipalities.addEdge("SuperSource", v->getMunicipality(), INF , "SuperSource");
+        initialMun.push_back(v->getMunicipality());
+        //cout << v->getMunicipality() <<endl;
     }
+//cout << "final" << endl;
+    vector<Vertex*> finalStops = graph.getFinalStops();
+    for(Vertex* v : finalStops){
 
-    vector<Vertex*> finalStops;
-    for (auto v: graph_municipalities.getVertexSet()){
-        if (v->getAdj().empty()){
-            finalStops.push_back(v);
+        if ( find(initialMun.begin(), initialMun.end(), v->getMunicipality()) == initialMun.end()){
+            graph_municipalities.addEdge(v->getMunicipality(), "SuperSink", INF, "SuperSink");
+            //cout << v->getMunicipality() << endl;
         }
     }
 
-    for(Vertex* v : finalStops){
-        graph_municipalities.addEdge(v->getName(), "SuperSink", INF , "SuperSink");
-    }
-
     string source = graph_municipalities.findVertex("SuperSource")->getName();
+
+    /*for (Vertex* v: graph_municipalities.getVertexSet()){
+        if ( find(initialMun.begin(), initialMun.end(), v->getName()) == initialMun.end()){
+            string sink = v->getName();
+            double flow = RmaxFlow_municipalities(source, sink);
+            res.push_back({v->getName(), flow});
+            cout << v->getName() << "  " << flow << endl;}
+    }
+*/
+
+
     string sink = graph_municipalities.findVertex("SuperSink")->getName();
 
-    RmaxFlow_municipalities(source, sink);
+    double flow = RmaxFlow_municipalities(source, sink);
+
 
     for (auto v: graph_municipalities.getVertexSet()){
         double f = 0;
         for (auto e: v->getIncoming()){
             f += e->getFlow();
         }
-        if (v->getName()!= "SuperSource" && v->getName()!= "SuperSink"){ res.push_back({v->getName(), f}); }
-    }
+        if (v->getName()!= "SuperSource" && v->getName()!= "SuperSink"){ res.push_back({v->getName(), f});
+        //cout << v->getName() << "  " << f << endl;}
+    }}
 
     std::sort(res.begin(), res.end(), [](auto &left, auto &right) {
         return left.second > right.second;
@@ -471,14 +487,14 @@ std::vector<string> Railway::topKMunicipalities(int k){
 
     for (int i = 1; i <= k; i++){
         rtrn.push_back((res[i].first));
+        //cout << res[i].second << endl;
     }
     graph_municipalities.removeVertex("SuperSource");
     graph_municipalities.removeVertex("SuperSink");
 
     return rtrn;
 }
-std::vector<string> Railway::topKStations(int k){
-    vector<string> rtrn;
+std::vector<pair<string,double>> Railway::StationsFlow(){
     vector<pair<string, double>> res;
 
     //add a super source
@@ -491,14 +507,9 @@ std::vector<string> Railway::topKStations(int k){
     for(Vertex* v : initialStops){
         if (v->isEnabled()) graph.addEdge("SuperSource", v->getName(), INF , "SuperSource");
     }
+    //cout <<"final" << endl;
 
-    vector<Vertex*> finalStops;
-    for (auto v: graph.getVertexSet()){
-        if (v->getAdj().empty() && v->isEnabled()){
-            finalStops.push_back(v);
-        }
-    }
-
+    vector<Vertex*> finalStops = graph.getFinalStops();
     for(Vertex* v : finalStops){
         graph.addEdge(v->getName(), "SuperSink", INF , "SuperSink");
     }
@@ -506,7 +517,9 @@ std::vector<string> Railway::topKStations(int k){
     string source = graph.findVertex("SuperSource")->getName();
     string sink = graph.findVertex("SuperSink")->getName();
 
-    RmaxFlow(source, sink);
+    //RmaxFlow(source, sink);
+
+    this->graph.maxFlow(source, sink, INF);
 
     for (auto v: graph.getVertexSet()){
         if (v->isEnabled()){
@@ -515,20 +528,21 @@ std::vector<string> Railway::topKStations(int k){
                 f += e->getFlow();
             }
             if (v->getName() != "SuperSource" && v->getName() != "SuperSink") { res.push_back({v->getName(), f}); }
+            //cout << f <<endl;
         }
     }
 
-    std::sort(res.begin(), res.end(), [](auto &left, auto &right) {
+    /*std::sort(res.begin(), res.end(), [](auto &left, auto &right) {
         return left.second > right.second;
     });
 
     for (int i = 1; i <= k; i++){
         rtrn.push_back((res[i].first));
-    }
+    }*/
     graph.removeVertex("SuperSource");
     graph.removeVertex("SuperSink");
 
-    return rtrn;
+    return res;
 }
 
 
@@ -543,19 +557,19 @@ std::vector<string> Railway::topKDistricts(int k){
 
     //add edges from super source to all initial stops
     vector<Vertex*> initialStops = graph.getInitialStops();
+    vector<string> initialDis;
     for(Vertex* v : initialStops){
-        graph_districts.addEdge("SuperSource", v->getMunicipality(), INF , "SuperSource");
+        graph_districts.addEdge("SuperSource", v->getDistrict(), INF , "SuperSource");
+        initialDis.push_back(v->getDistrict());
     }
 
-    vector<Vertex*> finalStops;
-    for (auto v: graph_districts.getVertexSet()){
-        if (v->getAdj().empty()){
-            finalStops.push_back(v);
-        }
-    }
-
+    vector<Vertex*> finalStops = graph.getFinalStops();
     for(Vertex* v : finalStops){
-        graph_districts.addEdge(v->getName(), "SuperSink", INF , "SuperSink");
+
+        if ( find(initialDis.begin(), initialDis.end(), v->getDistrict()) == initialDis.end()){
+            graph_districts.addEdge(v->getDistrict(), "SuperSink", INF, "SuperSink");
+            //cout << v->getDistrict() << endl;
+        }
     }
 
     string source = graph_districts.findVertex("SuperSource")->getName();
@@ -571,6 +585,7 @@ std::vector<string> Railway::topKDistricts(int k){
 
         if (v->getName()!= "SuperSource" && v->getName()!= "SuperSink"){
             res.push_back({v->getName(), f});
+            //cout << v->getName() << "  "<< f <<endl;
         }
     }
 

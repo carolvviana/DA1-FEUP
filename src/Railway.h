@@ -168,7 +168,7 @@ public:
      * @param k
      * @return
      */
-    std::vector<string> topKStations(int k);
+    std::vector<pair<string,double>> StationsFlow();
 
     /**
      * @brief Calculates the Top K municipalities with the bigger budget needs (Municipalities with bigger maximum flow need bigger budgets)

@@ -194,7 +194,16 @@ std::vector<Vertex*> Graph:: getInitialStops(){
 
 void Graph::setInitialStops() {
     for (Vertex* v: vertexSet){
-        if (v->getIncoming().empty()) initialStops.push_back(v);
+        if (v->getIncoming().empty() && !(v->getAdj().empty())) initialStops.push_back(v);
+    }
+}
+std::vector<Vertex*> Graph:: getFinalStops(){
+    return finalStops;
+}
+
+void Graph::setFinalStops() {
+    for (Vertex* v: vertexSet){
+        if (v->getAdj().empty() && !(v->getIncoming().empty())) finalStops.push_back(v);
     }
 }
 
