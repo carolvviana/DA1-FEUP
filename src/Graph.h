@@ -87,23 +87,24 @@ public:
     void setInitialStops();
 
     /**
-     * @brief
-     * Time Complexity:
-     * @param source
-     * @param dest
-     * @param max_flow
-     * @param min_cost
-     * @return
+     * @brief Finds the shortest path between two stations
+     * Time Complexity: O((V+E)log(V))
+     * @param source Name of Station_A
+     * @param dest Name of Station_B
+     * @param max_flow Flow (Max number of trains that can travel between the two stations)
+     * @param min_cost Flow cost (Cost of travel between the two stations)
+     * @return True if a path has been found. False otherwise.
      */
     bool dijkstra(string& source, string& dest, int& max_flow, int& min_cost);
 
     /**
-     *
-     * @param source
-     * @param sink
-     * @param flow
-     * @param cost
-     * @return
+     * @brief Finds the maximum flow and the flow cost between two stations
+     * Time Complexity: O((V+E)log(V))
+     * @param source Name of Station_A
+     * @param sink Name of Station_B
+     * @param flow Flow (Max number of trains that can travel between the two stations)
+     * @param cost Flow cost (Cost of travel between the two stations)
+     * @return True if the dijkstra algorithm found a path. False otherwise.
      */
     bool max_flow_min_cost(string& source, string& sink, int& flow, int& cost);
 

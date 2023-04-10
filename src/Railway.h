@@ -186,9 +186,11 @@ public:
     double maxNumberOfTrainsArriving(string dest);
 
     /**
-     * @brief
-     * Time Complexity:
-     * @return
+     * @brief Calculates the maximum amount of trains that can travel between two stations with minimum cost for the company
+     * Time Complexity: O((V+E)log(V))
+     * @param source Name of Station_A
+     * @param dest Name of Station_B
+     * @return Pair with the number of trains and their cost
      */
     pair<int,int> operationCost(string& source, string& dest);
 
