@@ -75,20 +75,12 @@ void Graph::cleanGraph() {
         }
         v->getAdj().clear();
 
-<<<<<<< HEAD
         /*if ( v->getName() != "SuperSource"){
             for (auto e: v->getIncoming()) {
                 delete e;
             }
             v->getIncoming().clear();
         }*/
-=======
-//        for(auto e : v->getIncoming()){
-//            if(e != nullptr)
-//                delete e;
-//        }
-//        v->getIncoming().clear();
->>>>>>> da3de362d82d36df50b20b80a726a15b4c8a2bf7
 
         delete v;
     }

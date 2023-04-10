@@ -529,7 +529,7 @@ std::vector<string> Railway::topKStations(int k){
         rtrn.push_back((res[i].first));
     }
     graph.removeVertex("SuperSource");
-    //graph.removeVertex("SuperSink");
+    graph.removeVertex("SuperSink");
 
     return rtrn;
 }
@@ -647,17 +647,6 @@ void Railway::resetGraph() {
     }
 }
 
-<<<<<<< HEAD
-/*void Railway:: setOGGraph(){
-    graph.cleanGraph();
-    for (auto p: originalStations){
-        graph.addVertex(get<0>(p),get<1>(p),get<2>(p),get<3>(p),get<4>(p));
-    }
-    for (auto p: originalLines){
-        graph.addEdge(get<0>(p),get<1>(p),(stod)(get<2>(p)),get<3>(p));
-    }
-}*/
-=======
 void Railway::buildGraph(const string &stations_path, const string &lines_path) {
     createStations(stations_path);
     createLines(lines_path);
@@ -666,4 +655,3 @@ void Railway::buildGraph(const string &stations_path, const string &lines_path) 
     createStationsDistricts(stations_path);
     createLinesDistricts(lines_path);
 }
->>>>>>> da3de362d82d36df50b20b80a726a15b4c8a2bf7
