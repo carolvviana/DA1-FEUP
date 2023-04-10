@@ -59,7 +59,7 @@ void Railway::createStations(const string& filepath) {
         }
 
         graph.addVertex(name, district, municipality, township, station_line);
-        originalStations.push_back({name, district, municipality, township, station_line});
+
     }
 }
 
@@ -208,7 +208,6 @@ void Railway::createLines(const string &filepath) {
 
         if(graph.findVertex(station_a) != nullptr && graph.findVertex(station_b) != nullptr) {
             graph.addEdge(station_a, station_b, stoi(capacity), service);
-            originalLines.push_back({station_a, station_b, capacity, service});
         }
     }
 
@@ -411,8 +410,6 @@ std::vector<pair<double, string>> Railway::mostAmountOfTrains(){
     //sort in descending order
     sort(result.rbegin(), result.rend());
 
-    //setOGGraph();
-
     return result;
 }
 
@@ -533,6 +530,7 @@ std::vector<string> Railway::topKStations(int k){
 
     return rtrn;
 }
+
 
 std::vector<string> Railway::topKDistricts(int k){
     vector<string> rtrn;

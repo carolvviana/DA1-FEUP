@@ -567,7 +567,7 @@ void Menu::subgraphMostSensitive() {
             for (string s: res){
                 cout << s << " | ";
             }
-            cout <<endl;
+            cout << endl;
 
             cout << "Press enter to continue..." << endl;
             std::cin.get(); // wait for user input

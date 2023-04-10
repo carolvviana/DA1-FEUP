@@ -17,7 +17,7 @@ class Graph {
 public:
     ~Graph();
     /*
-    * Auxiliary function to find a vertex with a given ID.
+    * Auxiliary function to find a vertex with a given name.
     */
     Vertex *findVertex(const string &name) const;
     /*
@@ -37,24 +37,74 @@ public:
 
     std::vector<Vertex *> getVertexSet() const;
 
+    /**
+     * @brief Deletes memory allocated for the graph
+     * Time Complexity: O(V * E)
+     */
     void cleanGraph();
-
 
     /**
      * @brief Determine the maximum flow of a determined Graph, this also takes into consideration the maximum flow of the source vertex which may not be infinite
+     * Time Complexity: O(V^2 * E)
      * @param source - Name of the source vertex
      * @param dest - Name of the destination vertex
      * @param maxSourceFlow - Maximum flow of the source vertex
      * @return
      */
     void maxFlow(const string& source, const string& dest, double maxSourceFlow);
+
+    /**
+     * @brief Finds the shortest path between two vertices, using an adpated version of BFS algorithm to take into consideration disabled edges or stations
+     * Also takes into consideration the maximum flow of the source vertex
+     * Time Complexity: O(V + E)
+     * @param s Vertex* - Source vertex
+     * @param t Vertex* - Destination vertex
+     * @param maxSourceFlow Maximum flow of the source vertex
+     * @return True if there is a path between the two vertices, false otherwise
+     */
     bool path(Vertex* s, Vertex* t, double maxSourceFlow);
+
+    /**
+     * @brief Finds the bottleneck of a path
+     * Time Complexity: O(V)
+     * @param s Vertex* - Source vertex
+     * @param t Vertex* - Destination vertex
+     * @param maxSourceFlow Maximum flow of the source vertex
+     * @return The bottleneck of the path
+     */
     double findBottleneck(Vertex* s, Vertex* t, double maxSourceFlow);
+
+    /**
+     * @brief Augments the path between two vertices
+     * Time Complexity: O(V)
+     * @param s Vertex* - Source vertex
+     * @param t Vertex* - Destination vertex
+     * @param bottleneck - The bottleneck of the path
+     */
     void augmentedPath(Vertex* s, Vertex* t, double bottleneck);
+
     std::vector<Vertex*> getInitialStops();
     void setInitialStops();
 
+    /**
+     * @brief
+     * Time Complexity:
+     * @param source
+     * @param dest
+     * @param max_flow
+     * @param min_cost
+     * @return
+     */
     bool dijkstra(string& source, string& dest, int& max_flow, int& min_cost);
+
+    /**
+     *
+     * @param source
+     * @param sink
+     * @param flow
+     * @param cost
+     * @return
+     */
     bool max_flow_min_cost(string& source, string& sink, int& flow, int& cost);
 
 

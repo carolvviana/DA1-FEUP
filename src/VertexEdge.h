@@ -48,6 +48,7 @@ public:
             return v1->dist > v2->dist;
         }
     };
+
     string getMunicipality() const;
     string getDistrict() const;
 

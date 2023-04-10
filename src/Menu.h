@@ -28,6 +28,7 @@ enum MenuState{
  */
 class Menu {
 private:
+
     /**
      * @var railway - railway object
      */
@@ -38,7 +39,7 @@ private:
     std::stack<MenuState> menuState;
 
     /**
-     * Function to get the menu on top menuState stack
+     * @brief Function to get the menu on top menuState stack
      */
     void getMenu();
 
@@ -48,42 +49,54 @@ private:
     int option;
 
     /**
-     * Initial menu of application
+     * @brief Initial menu of application
      */
     void InitMenu();
 
     /**
-     * Main menu of application
+     * @brief Main menu of application
      */
     void mainMenu();
 
     /**
-     * Basic Service Metrics menu
+     * @brief Basic Service Metrics menu
      */
     void basicServiceMetrics();
 
     /**
-     * Operations Cost Optimization menu
+     * @brief Operations Cost Optimization menu
      */
     void operationsCostOptimization();
 
     /**
-     * Reliability and Sensitivity to Line Failures menu
+     * @brief Reliability and Sensitivity to Line Failures menu
      */
     void reliabilityAndSensitivityToLineFailures();
 
-
+    /**
+     * @brief Subgraph analysis - Max trains menu
+     */
     void subgraphMaxTrains();
 
+    /**
+     * @brief Subgraph analysis - Most sensitive menu
+     */
     void subgraphMostSensitive();
 
     /**
-     * Function to clear the Menu stack
+     * @brief Function to clear the Menu stack
      * This should be called before leaving the application to avoid memory leaks
      */
     void clearStack();
 
+    /**
+     * @var stationsFilepath - filepath to stations file
+     */
     string stationsFilepath = "../data/stations.csv";
+
+    /**
+     * @var linesFilepath - filepath to lines file
+     */
     string linesFilepath= "../data/network.csv";
 
 public:
@@ -91,8 +104,6 @@ public:
      * Constructor of Menu class
      */
     Menu();
-
-
 };
 
 
