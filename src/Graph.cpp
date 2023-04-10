@@ -80,6 +80,7 @@ void Graph::cleanGraph() {
 
     vertexSet.clear();
     initialStops.clear();
+    finalStops.clear();
 }
 
 void Graph :: maxFlow(const string& source, const string& dest, double maxSourceFlow){

@@ -584,8 +584,8 @@ void Menu::subgraphMostSensitive() {
 
             for (int i = 0; i < n; i++){
                 res.push_back(comp[i].first);
-                cout << comp[i].first << endl;
-                cout << comp[i].second << endl;
+                //cout << comp[i].first << endl;
+                //cout << comp[i].second << endl;
             }
 
     cout << "Here are the top-" << number << " stations that are most affected by failures:" << endl;
@@ -599,8 +599,9 @@ void Menu::subgraphMostSensitive() {
 
     std::cin.get(); // wait for user input
 
-    //railway.cleanGraph();
-    //railway.buildGraph(stationsFilepath, linesFilepath);
+    railway.cleanGraph();
+    railway.buildGraph(stationsFilepath, linesFilepath);
+
     break;
 }
 case 4:
