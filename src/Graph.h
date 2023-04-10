@@ -16,23 +16,13 @@
 class Graph {
 public:
     ~Graph();
-    /*
-    * Auxiliary function to find a vertex with a given name.
-    */
+
     Vertex *findVertex(const string &name) const;
-    /*
-     *  Adds a vertex with a given content or info (in) to a graph (this).
-     *  Returns true if successful, and false if a vertex with that content already exists.
-     */
+
     bool addVertex(const string &name,const string& district, const string& municipality, const string& township, const string& station_line);
 
     bool removeVertex(const string &name);
 
-    /*
-     * Adds an edge to a graph (this), given the contents of the source and
-     * destination vertices and the edge weight (w).
-     * Returns true if successful, and false if the source or destination vertex does not exist.
-     */
     bool addEdge(const string &source, const string &dest, double w, const string& service);
 
     std::vector<Vertex *> getVertexSet() const;

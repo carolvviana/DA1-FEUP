@@ -181,6 +181,7 @@ public:
 
     /**
      * @brief Calculates the maximum number of trains that can arrive at a station, using the Edmonds-Karp algorithm
+     * Time Complexity: O(E * V^2)
      * @param dest Name of the destination station
      * @return The maximum number of trains that can arrive at the station
      */
