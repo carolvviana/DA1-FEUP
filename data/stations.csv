@@ -1,11 +1,11 @@
 Name,District,Municipality,Township,Line
-Porto Campanhã,PORTO,PORTO,Porto,Linha do Norte
+Porto Campanha,PORTO,PORTO,Porto,Linha do Norte
 Viana do Castelo,VIANA DO CASTELO,VIANA DO CASTELO,Viana do Castelo,Linha do Minho
 Ermidas-Sado,SETÚBAL,SANTIAGO DO CACÉM,Ermidas-Sado,Linha do Sul
 Faro,FARO,FARO,Faro,Linha do Algarve
 Funcheira,BEJA,OURIQUE,Funcheira,Linha do Sul
 Lisboa Oriente,LISBOA,LISBOA,Parque das Nações,Linha do Norte
-Nine,BRAGA,FAMALICÃO,Nine,Linha do Minho
+Nine,BRAGA,Famalicao,Nine,Linha do Minho
 Pinhal Novo,SETÚBAL,PALMELA,Pinhal Novo,Linha do Sul
 Pombal,LEIRIA,POMBAL,Pombal,Linha do Norte
 Tunes,FARO,SILVES,Tunes,Linha do Sul
@@ -18,7 +18,7 @@ Branca,AVEIRO,ALBERGARIA-A-VELHA,Branca,Linha do Vouga
 Valongo-Vouga,AVEIRO,ÁGUEDA,Valongo do Vouga,Linha do Vouga
 Mirão,PORTO,BAIÃO,Santa Cruz do Douro e São Tomé de Covelas,Linha do Douro
 Oliveira,PORTO,AMARANTE,Vila Meã,Linha do Douro
-Famalicão,BRAGA,VILA NOVA DE FAMALICÃO,Vila Nova de Famalicão e Calendário,Linha do Minho
+Famalicao,BRAGA,VILA NOVA DE Famalicao,Vila Nova de Famalicao e Calendário,Linha do Minho
 Covas,BRAGA,GUIMARÃES,Urgezes,Linha de Guimarães
 Darque,VIANA DO CASTELO,VIANA DO CASTELO,Darque,Linha do Minho
 Seiça-Ourém,SANTARÉM,OURÉM,Seiça,Linha do Norte
@@ -86,7 +86,7 @@ Espinho,AVEIRO,ESPINHO,Espinho,Linha do Norte
 Paraimo,AVEIRO,ANADIA,Sangalhos,Linha do Norte
 Carapeços,BRAGA,BARCELOS,Carapeços,Linha do Minho
 Recezinhos,PORTO,PENAFIEL,Castelões,Linha do Douro
-Esmeriz,BRAGA,VILA NOVA DE FAMALICÃO,Esmeriz e Cabeçudos,Linha do Minho
+Esmeriz,BRAGA,VILA NOVA DE Famalicao,Esmeriz e Cabeçudos,Linha do Minho
 Trancoso,PORTO,PAREDES,Recarei,Linha do Douro
 Aveleda,BRAGA,BRAGA,"Celeirós, Aveleda e Vimieiro",Ramal de Braga
 Vila Pouca do Campo,COIMBRA,COIMBRA,"Taveiro, Ameal e Arzila",Linha do Norte
@@ -98,7 +98,7 @@ General Torres,PORTO,VILA NOVA DE GAIA,Santa Marinha e São Pedro da Afurada,Lin
 Coimbra B,COIMBRA,COIMBRA,Eiras e São Paulo de Frades,Linha do Norte
 Mazagão,BRAGA,BRAGA,"Celeirós, Aveleda e Vimieiro",Ramal de Braga
 Portela,PORTO,TROFA,Covelas,Linha do Minho
-Mouquim,BRAGA,VILA NOVA DE FAMALICÃO,"Lemenhe, Mouquim e Jesufrei",Linha do Minho
+Mouquim,BRAGA,VILA NOVA DE Famalicao,"Lemenhe, Mouquim e Jesufrei",Linha do Minho
 Castelo Novo,CASTELO BRANCO,FUNDÃO,Castelo Novo,Linha da Beira Baixa
 Giesteira,BRAGA,GUIMARÃES,Lordelo,Linha de Guimarães
 Seixas,VIANA DO CASTELO,CAMINHA,Seixas,Linha do Minho
@@ -153,7 +153,7 @@ Paúl,LEIRIA,BOMBARRAL,Roliça,Linha do Oeste
 Dois Portos,LISBOA,TORRES VEDRAS,Dois Portos e Runa,Linha do Oeste
 Recarei - Sobreira,PORTO,PAREDES,Sobreira,Linha do Douro
 Adémia,COIMBRA,COIMBRA,Trouxemil e Torre de Vilela,Linha do Norte
-Caniços,BRAGA,VILA NOVA DE FAMALICÃO,Bairro,Linha de Guimarães
+Caniços,BRAGA,VILA NOVA DE Famalicao,Bairro,Linha de Guimarães
 Donas,CASTELO BRANCO,FUNDÃO,"Fundão, Valverde, Donas, A. Joanes, A. Nova do Cabo",Linha da Beira Baixa
 Lapa do Lobo,VISEU,NELAS,Lapa do Lobo,Linha da Beira Alta
 Ameal,COIMBRA,COIMBRA,"Taveiro, Ameal e Arzila",Linha do Norte
@@ -217,7 +217,7 @@ Mouriscas-A,SANTARÉM,ABRANTES,Mouriscas,Linha da Beira Baixa
 Carcavelos,LISBOA,CASCAIS,Carcavelos e Parede,Linha de Cascais
 Oeiras,LISBOA,OEIRAS,"Oeiras e S. Julião da Barra, Paço de Arcos e Caxias",Linha de Cascais
 Leça do Balio,PORTO,MATOSINHOS,"Custóias, Leça do Balio e Guifões",Linha de Leixões
-Barrimau,BRAGA,VILA NOVA DE FAMALICÃO,Vila Nova de Famalicão e Calendário,Linha do Minho
+Barrimau,BRAGA,VILA NOVA DE Famalicao,Vila Nova de Famalicao e Calendário,Linha do Minho
 Portalegre,PORTALEGRE,PORTALEGRE,Urra,Linha do Leste
 São Mamede,LEIRIA,BOMBARRAL,Roliça,Linha do Oeste
 Telhada,COIMBRA,FIGUEIRA DA FOZ,Paião,Linha do Oeste
@@ -354,7 +354,7 @@ Desvio de Picotas,BEJA,CASTRO VERDE,Castro Verde e Casével,Ramal Neves Corvo
 Minas de Neves Corvo,BEJA,CASTRO VERDE,Santa Bárbara de Padrões,Ramal Neves Corvo
 Palmilheira,PORTO,MAIA,Águas Santas,Linha do Minho
 Cavaco,AVEIRO,SANTA MARIA DA FEIRA,"Santa Maria da Feira, Travanca, Sanfins e Espargo",Linha do Vouga
-Famalicão da Nazaré,LEIRIA,NAZARÉ,Famalicão,Linha do Oeste
+Famalicao da Nazaré,LEIRIA,NAZARÉ,Famalicao,Linha do Oeste
 Aguieira,AVEIRO,ÁGUEDA,Valongo do Vouga,Linha do Vouga
 Valongo,PORTO,VALONGO,Valongo,Linha do Douro
 Carvalha,VIANA DO CASTELO,VILA NOVA DE CERVEIRA,Campos e Vila Meã,Linha do Minho
@@ -446,7 +446,7 @@ Esqueiro,VIANA DO CASTELO,CAMINHA,Lanhelas,Linha do Minho
 Cabanões,AVEIRO,ÁGUEDA,Travassô e Óis da Ribeira,Linha do Vouga
 Azurva,AVEIRO,AVEIRO,Eixo e Eirol,Linha do Vouga
 Leixões,PORTO,MATOSINHOS,Matosinhos e Leça da Palmeira,Linha de Leixões
-Louro,BRAGA,VILA NOVA DE FAMALICÃO,Louro,Linha do Minho
+Louro,BRAGA,VILA NOVA DE Famalicao,Louro,Linha do Minho
 Eixo,AVEIRO,AVEIRO,Eixo e Eirol,Linha do Vouga
 Bustelo,PORTO,PENAFIEL,Bustelo,Linha do Douro
 Vale de Santarém,SANTARÉM,SANTARÉM,Vale de Santarém,Linha do Norte
@@ -520,13 +520,13 @@ Francelos Sul,PORTO,VILA NOVA DE GAIA,Gulpilhares e Valadares,Linha do Norte
 Francelos Norte,PORTO,VILA NOVA DE GAIA,Gulpilhares e Valadares,Linha do Norte
 Fuentes de Onõro,,,,Rede Espanhola
 Badajoz,,,,Rede Espanhola
-Porto Campanhã,PORTO,PORTO,Porto,Linha do Norte
+Porto Campanha,PORTO,PORTO,Porto,Linha do Norte
 Viana do Castelo,VIANA DO CASTELO,VIANA DO CASTELO,Viana do Castelo,Linha do Minho
 Ermidas-Sado,SETÚBAL,SANTIAGO DO CACÉM,Ermidas-Sado,Linha do Sul
 Faro,FARO,FARO,Faro,Linha do Algarve
 Funcheira,BEJA,OURIQUE,Funcheira,Linha do Sul
 Lisboa Oriente,LISBOA,LISBOA,Parque das Nações,Linha do Norte
-Nine,BRAGA,FAMALICÃO,Nine,Linha do Minho
+Nine,BRAGA,Famalicao,Nine,Linha do Minho
 Pinhal Novo,SETÚBAL,PALMELA,Pinhal Novo,Linha do Sul
 Pombal,LEIRIA,POMBAL,Pombal,Linha do Norte
 Tunes,FARO,SILVES,Tunes,Linha do Sul

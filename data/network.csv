@@ -124,8 +124,8 @@ São Romão,Portela,2,STANDARD
 Portela,Trofa,2,STANDARD
 Trofa,Esmeriz,2,STANDARD
 Esmeriz,Barrimau,2,STANDARD
-Barrimau,Famalicão,4,STANDARD
-Famalicão,Mouquim,2,STANDARD
+Barrimau,Famalicao,4,STANDARD
+Famalicao,Mouquim,2,STANDARD
 Mouquim,Louro,2,STANDARD
 Louro,Carreira,2,STANDARD
 Carreira,Barcelos,6,STANDARD
@@ -434,8 +434,8 @@ Caldas da Rainha,Campo-Serra,2,STANDARD
 Campo-Serra,Bouro,2,STANDARD
 Bouro,Salir do Porto,2,STANDARD
 Salir do Porto,São Martinho do Porto,4,STANDARD
-São Martinho do Porto,Famalicão da Nazaré,2,STANDARD
-Famalicão da Nazaré,Cela,2,STANDARD
+São Martinho do Porto,Famalicao da Nazaré,2,STANDARD
+Famalicao da Nazaré,Cela,2,STANDARD
 Cela,Valado,4,STANDARD
 Valado,Fanhais,2,STANDARD
 Fanhais,Pataias,4,STANDARD
@@ -484,7 +484,7 @@ Estoril,Monte Estoril,2,STANDARD
 Monte Estoril,Cascais,4,STANDARD
 Viana do Castelo,Nine,4,STANDARD
 Nine,Trofa,4,STANDARD
-Porto Campanhã,Espinho,6,STANDARD
+Porto Campanha,Espinho,6,STANDARD
 Coimbra B,Figueira da Foz,4,STANDARD
 Figueira da Foz,Leiria,4,STANDARD
 Leiria,Óbidos,4,STANDARD
@@ -493,10 +493,10 @@ Pombal,Chão de Maçãs-Fátima,4,STANDARD
 Chão de Maçãs-Fátima,Entroncamento,2,STANDARD
 Entroncamento,Lisboa Oriente,8,STANDARD
 Albufeira - Ferreiras,Faro,8,STANDARD
-Braga,Famalicão,4,ALFA PENDULAR
-Famalicão,Trofa,4,ALFA PENDULAR
-Trofa,Porto Campanhã,10,ALFA PENDULAR
-Porto Campanhã,Vila Nova de Gaia-Devesas,8,ALFA PENDULAR
+Braga,Famalicao,4,ALFA PENDULAR
+Famalicao,Trofa,4,ALFA PENDULAR
+Trofa,Porto Campanha,10,ALFA PENDULAR
+Porto Campanha,Vila Nova de Gaia-Devesas,8,ALFA PENDULAR
 Vila Nova de Gaia-Devesas,Espinho,6,ALFA PENDULAR
 Espinho,Aveiro - Vouga,10,ALFA PENDULAR
 Aveiro - Vouga,Coimbra B,8,ALFA PENDULAR

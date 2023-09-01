@@ -460,7 +460,7 @@ void Menu::subgraphMaxTrains() {
             break;
         }
         case 3:{
-            cout << "This may take a while :)" << endl;
+            /*cout << "This may take a while :)" << endl;
             cout << "Should take around 1 minute" << endl;
 
             std::vector<pair<double, string>> result = railway.mostAmountOfTrains();
@@ -472,8 +472,30 @@ void Menu::subgraphMaxTrains() {
                     auto s = result.at(i);
                     cout << "  " << s.first << " " << s.second <<'\n';
                 }
-            }
+            }*/
+            string station1, station2;
 
+            do {
+
+                cout << "Origin Station: ";
+                getline(cin, station1);
+                cout << "Destination Station: ";
+                getline(cin, station2);
+
+                if (!railway.stationExists(station1) || !railway.stationExists(station2)) {
+                    cout << "Invalid Station!" << endl;
+                }
+
+            } while(!railway.stationExists(station1) || !railway.stationExists(station2));
+
+            cout << railway.RmaxFlow(station1, station2, std::numeric_limits<double>::max()) << endl;
+
+            cout << "Press enter to continue..." << endl;
+            std::cin.get(); // wait for user input
+
+            break;
+
+/*
             cout << "Press enter to continue..." << endl;
 
             railway.cleanGraph();
@@ -481,7 +503,7 @@ void Menu::subgraphMaxTrains() {
 
             std::cin.get(); // wait for user input
 
-            break;
+            break;*/
         }
         case 4:
             menuState.pop();

@@ -1,5 +1,12 @@
-Name,District,Municipality,Township,Line
-Porto Campanhã,PORTO,PORTO,Porto,Linha do Norte
-Viana do Castelo,VIANA DO CASTELO,VIANA DO CASTELO,Viana do Castelo,Linha do Minho
-Ermidas-Sado,SETÚBAL,SANTIAGO DO CACÉM,Ermidas-Sado,Linha do Sul
-Faro,FARO,FARO,Faro,Linha do Algarve
+Station_A,Station_B,Capacity,Service
+Station 1,Station 2,8,STANDARD
+Station 2,Station 3,4,STANDARD
+Station 2,Station 8,6,STANDARD
+Station 3,Station 4,4,STANDARD
+Station 3,Station 5,4,STANDARD
+Station 3,Station 6,4,ALFA PENDULAR
+Station 5,Station 6,6,STANDARD
+Station 6,Station 7,2,STANDARD
+Station 6,Station 9,6,ALFA PENDULAR
+Station 7,Station 9,4,STANDARD
+Station 9,Station 10,8,STANDARD
